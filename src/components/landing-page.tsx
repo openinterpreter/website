@@ -26,9 +26,9 @@ export function LandingPage() {
   }, [])
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen flex-col md:flex-row">
       {/* Left Section */}
-      <div className="flex w-1/2 flex-col items-center justify-between p-8 lg:p-12">
+      <div className="relative flex w-full h-screen md:h-auto md:w-1/2 flex-col items-center justify-between p-8 lg:p-12">
         {/* Logo */}
         <div className="flex items-center gap-[3px] text-3xl font-serif w-full justify-center text-black">
           <span>❯</span>
@@ -80,27 +80,27 @@ export function LandingPage() {
           </div>
         </div>
 
-        {/* Learn more button (positioned absolutely) */}
-        <div className="absolute bottom-8 left-1/4 -translate-x-1/2">
+        {/* Learn more button */}
+        <div className="absolute bottom-8 left-0 right-0 flex justify-center">
           <Button
             variant="outline"
-            className="px-3 py-1 rounded-lg text-sm font-medium bg-white/20 text-white hover:bg-white hover:text-[#0000FF] transition-colors duration-300"
+            className="h-7 px-3 py-1 rounded-lg text-sm font-medium border-gray-200 bg-white text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300"
           >
             Learn more
-            <ChevronDown className="ml-1 h-4 w-4" />
+            <ChevronDown className="h-4 w-4" />
           </Button>
         </div>
       </div>
 
       {/* Right Section */}
       <div
-        className="relative flex w-1/2 items-center justify-center transition-colors duration-500 ease-in-out"
+        className="relative flex w-full h-screen md:h-auto md:w-1/2 items-center justify-center transition-colors duration-500 ease-in-out"
         style={{ backgroundColor: useCases[currentSlide].color }}
       >
         <h2 className="text-4xl font-bold text-white">{useCases[currentSlide].name}</h2>
 
         {/* Use Case Boxes */}
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
+        <div className="absolute bottom-8 left-4 right-4 flex flex-wrap justify-center gap-2">
           {useCases.map((useCase, index) => (
             <button
               key={index}
