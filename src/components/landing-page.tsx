@@ -30,22 +30,43 @@ export function LandingPage() {
       {/* Left Section */}
       <div className="relative flex w-full h-screen md:h-auto md:w-1/2 flex-col items-center justify-between p-8 lg:p-12">
         {/* Logo */}
-        <div className="flex items-center gap-[3px] text-3xl font-serif w-full justify-center text-black">
+        <div className="flex tracking-tighter items-center gap-[3px] text-3xl font-editorial w-full justify-center font-medium">
           <span>❯</span>
           <span>Interpreter</span>
         </div>
 
         {/* Main content */}
         <div className="flex-1 flex flex-col justify-center">
-          <div className="max-w-md flex flex-col items-center text-center">
-            <h1 className="mb-4 text-5xl font-serif">
-              A new way to use
-              <br />
-              your computer
-            </h1>
-            <p className="mb-8 text-lg text-muted-foreground">
-              Get more done, faster.
-            </p>
+          <div className="tracking-tighter max-w-md flex flex-col items-center text-center">
+            {(() => {
+              const titles = [
+                ['Your new', 'personal assistant.'],
+                ['A new way to', 'use your computer.'],
+                ['A new way to', 'control computers.'],
+                ['Your ideas', 'become actions.']
+              ];
+              const subtitles = [
+                'Get more done, faster.',
+                'Let language models control your computer.',
+                'Interpreter lets language models control your computer.',
+                'Interpreter controls your computer, to help you get more done.',
+                'Interpreter can edit, organize, and create with your files.'
+              ];
+              const randomTitle = titles[Math.floor(Math.random() * titles.length)];
+              const randomSubtitle = subtitles[Math.floor(Math.random() * subtitles.length)];
+              return (
+                <>
+                  <h1 className="mb-4 text-5xl font-editorial font-normal">
+                    {randomTitle[0]}
+                    <br />
+                    {randomTitle[1]}
+                  </h1>
+                  <p className="mb-8 text-lg text-muted-foreground">
+                    {randomSubtitle}
+                  </p>
+                </>
+              );
+            })()}
 
             <div className="space-y-4 w-full">
               <Button variant="outline" className="w-full justify-center">
@@ -69,7 +90,7 @@ export function LandingPage() {
                 placeholder="Enter your personal or work email"
                 className="w-full"
               />
-              <Button className="w-full bg-[#0000FF] hover:bg-[#0000DD] text-white">
+              <Button className="w-full bg-foreground hover:bg-foreground/80 text-white">
                 Continue with email
               </Button>
 
@@ -107,8 +128,8 @@ export function LandingPage() {
               onClick={() => setCurrentSlide(index)}
               className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors duration-300 ${
                 currentSlide === index
-                  ? 'bg-white text-[#0000FF]'
-                  : 'bg-white/20 text-white hover:bg-white hover:text-[#0000FF]'
+                  ? 'bg-white text-foreground'
+                  : 'bg-white/20 text-white hover:bg-white hover:text-foreground'
               }`}
             >
               {useCase.name}
