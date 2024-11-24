@@ -15,7 +15,7 @@ const useCases = [
   { name: 'Consulting', color: '#6C5CE7' },
 ]
 
-export function LandingPage() {
+export default function LandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   useEffect(() => {
@@ -38,35 +38,12 @@ export function LandingPage() {
         {/* Main content */}
         <div className="flex-1 flex flex-col justify-center">
           <div className="tracking-tighter max-w-md flex flex-col items-center text-center">
-            {(() => {
-              const titles = [
-                ['Your new', 'personal assistant.'],
-                ['A new way to', 'use your computer.'],
-                ['A new way to', 'control computers.'],
-                ['Your ideas', 'become actions.']
-              ];
-              const subtitles = [
-                'Get more done, faster.',
-                'Let language models control your computer.',
-                'Interpreter lets language models control your computer.',
-                'Interpreter controls your computer, to help you get more done.',
-                'Interpreter can edit, organize, and create with your files.'
-              ];
-              const randomTitle = titles[Math.floor(Math.random() * titles.length)];
-              const randomSubtitle = subtitles[Math.floor(Math.random() * subtitles.length)];
-              return (
-                <>
-                  <h1 className="mb-4 text-5xl font-editorial font-normal">
-                    {randomTitle[0]}
-                    <br />
-                    {randomTitle[1]}
-                  </h1>
-                  <p className="mb-8 text-lg text-muted-foreground">
-                    {randomSubtitle}
-                  </p>
-                </>
-              );
-            })()}
+            <h1 className="mb-4 text-5xl font-editorial font-normal">
+              A new way to use your computer
+            </h1>
+            <p className="mb-8 text-lg text-muted-foreground">
+              Let language models control your computer.
+            </p>
 
             <div className="space-y-4 w-full">
               <Button variant="outline" className="w-full justify-center">
