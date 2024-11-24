@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Then restore browser default styles for form elements */
+button,
+input {
+  all: revert;
+}
+
+/* Keep the link styles we want */
+a {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
 @font-face {
   font-family: 'PP Editorial New';
   src: url('/fonts/PPEditorialNew-Regular.otf') format('opentype');

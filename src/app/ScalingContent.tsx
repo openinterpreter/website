@@ -21,13 +21,10 @@ export default function ScalingContent({ children }: { children: React.ReactNode
     return () => window.removeEventListener('resize', updateSize)
   }, [])
 
-  // Prevent layout shift by hiding content until after hydration
   if (!mounted) {
     return (
       <div style={{ width: baseWidth, opacity: 0 }}>
-        <div style={{ padding: '0 20px' }}>
-          {children}
-        </div>
+        <div style={{ padding: '0 20px' }}>{children}</div>
       </div>
     )
   }
@@ -41,7 +38,7 @@ export default function ScalingContent({ children }: { children: React.ReactNode
           transformOrigin: 'top left',
           padding: '0 20px'
         }}
-        className="md:scale-100 font-['Times_New_Roman'] text-[#333] leading-[1.6] mt-12"
+        className="md:scale-100 font-['Times_New_Roman'] text-[#000] leading-[1.4] mt-8 [&_a]:text-[#0000EE] [&_a]:underline [&_p]:my-4 text-[16px]"
       >
         {children}
       </div>

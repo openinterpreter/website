@@ -1,0 +1,22 @@
+import ScalingContent from '../ScalingContent'
+import Navigation from '@/components/Navigation'
+
+export default function About() {
+  return (
+    <div>
+      <ScalingContent>
+        <Navigation />
+        
+        <h1>About</h1>
+        
+        <p>
+          This is the about page content. You can write whatever you'd like here.
+        </p>
+
+        <p>
+          The layout will maintain the same scaling behavior as the home page.
+        </p>
+      </ScalingContent>
+    </div>
+  )
+} 
