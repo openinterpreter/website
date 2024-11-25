@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Then restore browser default styles for form elements */
+/* Then restore browser default styles for form elements and tables */
 button,
-input {
+input,
+table,
+tr,
+td,
+tbody {
   all: revert;
 }
 
@@ -13,6 +17,8 @@ a {
   color: #0000EE;
   text-decoration: underline;
 }
+
+
 
 @font-face {
   font-family: 'PP Editorial New';

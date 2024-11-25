@@ -38,7 +38,7 @@ export default function ScalingContent({ children }: { children: React.ReactNode
           transformOrigin: 'top left',
           padding: '0 20px'
         }}
-        className="md:scale-100 font-['Times_New_Roman'] text-[#000] leading-[1.4] mt-8 [&_a]:text-[#0000EE] [&_a]:underline [&_p]:my-4 text-[16px]"
+        className="md:scale-100 font-['Times_New_Roman'] text-[#000] leading-[1.4] mt-8 [&_a]:text-[#0000EE] [&_a]:underline [&_p]:my-4 text-[17px]"
       >
         {children}
       </div>
