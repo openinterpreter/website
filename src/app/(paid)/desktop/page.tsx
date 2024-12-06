@@ -160,7 +160,7 @@ export default function LandingPage() {
         {/* Left Section */}
         <div className="relative flex w-full h-screen md:h-auto md:w-1/2 flex-col items-center justify-between p-8 lg:p-12">
           {/* Logo */}
-          <div className="flex tracking-tighter items-center gap-[3px] text-3xl font-editorial w-full justify-center font-medium">
+          <div className="flex select-none text-neutral-600 tracking-tighter items-center gap-[0.3px] text-3xl font-editorial w-full justify-center font-medium">
             <span>❯</span>
             <span>Interpreter</span>
           </div>
