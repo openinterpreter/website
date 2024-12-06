@@ -44,11 +44,16 @@ export default function Footer() {
         </div>
       </div>
       
-      <img 
-        src="/interpreter.png"
-        alt="Description"
-        className="w-96"
-      />
+      <Link
+        href="https://archive.org/details/computer-lib-dream-machines"
+        target="_blank"
+      >
+        <img 
+          src="/interpreter.png"
+          alt="Description"
+          className="w-96"
+        />
+      </Link>
     </div>
   )
 } 
