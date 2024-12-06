@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Then restore browser default styles for form elements and tables */
+.default-styles button,
+.default-styles input,
+.default-styles table,
+.default-styles tr,
+.default-styles td,
+.default-styles tbody {
+  all: revert;
+}
+
+/* Keep the link styles we want */
+.default-styles a {
+  color: #0000EE;
+  text-decoration: underline;
+}

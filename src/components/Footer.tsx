@@ -15,7 +15,7 @@ export default function Footer() {
           </li>
           <li>
             <Link 
-              href="https://github.com/KillianLucas/open-interpreter" 
+              href="https://discord.gg/Hvz9Axh84z" 
               target="_blank"
             >
               Discord
@@ -33,21 +33,22 @@ export default function Footer() {
         <div>
           <input 
             type="text" 
-            placeholder="email@example.com"
-            className="text-[17px]"
+            placeholder="your@email.com"
+            className="text-[14px]"
+            autoComplete="email"
           />
           { ' ' }
-          <button className="text-[17px]">
+          <button className="text-[14px]">
             Join Mailing List
           </button>
         </div>
       </div>
       
-      {/* <img 
+      <img 
         src="/interpreter.png"
         alt="Description"
         className="w-96"
-      /> */}
+      />
     </div>
   )
 } 

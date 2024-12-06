@@ -1,20 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-import ScalingContent from './ScalingContent'
+import "./style.css";
+import ScalingContent from '../ScalingContent'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -37,12 +25,12 @@ export default function RootLayout({
         <link rel="preload" href="/blog/second-post" as="document" />
         
         {/* Preload critical assets */}
-        <link rel="preload" href="/sketch.png" as="image" />
+        <link rel="preload" href="/interpreter.png" as="image" />
         <link rel="preload" href="/fonts/PPEditorialNew-Regular.otf" as="font" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/PPEditorialNew-Italic.otf" as="font" crossOrigin="anonymous" />
       </head>
       <body>
-        <div className="min-h-screen flex flex-col">
+        <div className="default-styles min-h-screen flex flex-col">
           <div className="flex-grow">
             <ScalingContent>
               <Navigation />

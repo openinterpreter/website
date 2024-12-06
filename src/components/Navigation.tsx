@@ -2,44 +2,37 @@ import Link from 'next/link'
 
 export default function Navigation() {
   return (
-    <nav style={{ marginBottom: '2rem' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <ul style={{ 
-          display: 'flex', 
-          gap: '1rem' 
-        }}>
+    <nav className="mb-8">
+      <div className="flex justify-between items-center">
+        <ul className="flex gap-4">
           <li>
             <Link 
               href="/" 
-              style={{ textDecoration: 'underline' }}
+              className="underline"
             >
               Home
             </Link>
           </li>
           <li>
             <Link 
-              href="/cli" 
-              style={{ textDecoration: 'underline' }}
+              href="https://github.com/KillianLucas/open-interpreter" 
+              className="underline"
             >
               CLI
             </Link>
           </li>
           <li>
             <Link 
-              href="/tool-standard" 
-              style={{ textDecoration: 'underline' }}
+              href="/desktop" 
+              className="underline"
             >
-              Tool Standard
+              Actions
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link 
               href="/events" 
-              style={{ textDecoration: 'underline' }}
+              className="underline"
             >
               Events
             </Link>
@@ -47,11 +40,11 @@ export default function Navigation() {
           <li>
             <Link 
               href="/blog" 
-              style={{ textDecoration: 'underline' }}
+              className="underline"
             >
               Blog
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </nav>
