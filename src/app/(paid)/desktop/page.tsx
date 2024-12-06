@@ -17,18 +17,18 @@ const useCases = [
 
 const features = [
   {
-    title: "Create with Interpreter Actions",
-    description: "Draft and iterate on websites, graphics, documents, and code alongside your chat with Artifacts.",
+    title: "Ask for anything your computer can do",
+    description: "Convert files, resize images, summarize documents, and more.",
     color: "#FF6B6B"
   },
   {
-    title: "Bring your knowledge",
-    description: "Connect your data and documents to give Claude the context it needs to help you work better.",
+    title: "Watch Actions do the work",
+    description: "By dynamically writing code to complete tasks, Actions is capable of almost anything.",
     color: "#4ECDC4"
   },
   {
-    title: "Share and collaborate with your team",
-    description: "Work together seamlessly with shared chat history and collaborative features.",
+    title: "Always safe and reversible",
+    description: "Interpreter Actions runs in a sandbox, and only makes changes to copies of your files.",
     color: "#45B7D1"
   }
 ]
@@ -37,38 +37,33 @@ const pricingPlans = [
   {
     name: "Free",
     price: "$0",
-    description: "Perfect for getting started",
+    description: "For getting started",
     features: [
       "Basic file operations",
-      "Command-line interface",
-      "Community support",
-      "Open-source"
+      "5 Actions per day",
+      "Community support"
     ]
   },
   {
     name: "Pro",
-    price: "$15",
+    price: "$30",
     period: "/month",
     description: "For power users",
     features: [
-      "Everything in Free",
+      "Advanced file operations",
+      "20 Actions per day",
       "Priority support",
-      "Advanced security features",
-      "Custom automations",
-      "Team collaboration"
     ],
     highlighted: true
   },
   {
     name: "Enterprise",
     price: "Custom",
-    description: "For large organizations",
+    description: "For organizations",
     features: [
       "Everything in Pro",
+      "Host on your own servers",
       "Dedicated support",
-      "Custom integrations",
-      "Advanced analytics",
-      "SLA guarantees"
     ]
   }
 ]
@@ -161,7 +156,7 @@ export default function LandingPage() {
       </div>
 
       {/* Main section */}
-      <div className="flex min-h-screen flex-col md:flex-row bg-white shadow-sm #dark:invert #dark:contrast-150 mb-32">
+      <div className="flex min-h-screen flex-col md:flex-row bg-white shadow-sm #dark:invert #dark:contrast-150">
         {/* Left Section */}
         <div className="relative flex w-full h-screen md:h-auto md:w-1/2 flex-col items-center justify-between p-8 lg:p-12">
           {/* Logo */}
@@ -242,20 +237,21 @@ export default function LandingPage() {
             <Button
               variant="outline"
               className="h-7 px-3 py-1 rounded-lg text-sm font-medium border-gray-200 bg-white text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300"
-              onClick={() => {
-                const firstSection = document.querySelector('.min-h-screen')
-                if (firstSection) {
-                  window.scrollTo({
-                    top: firstSection.clientHeight,
-                    behavior: 'smooth'
-                  })
-                  // Increase timeout to match scroll animation duration
-                  setTimeout(checkScrollPosition, 500)
-                }
-              }}
+              // onClick={() => {
+              //   const firstSection = document.querySelector('.min-h-screen')
+              //   if (firstSection) {
+              //     window.scrollTo({
+              //       top: firstSection.clientHeight,
+              //       behavior: 'smooth'
+              //     })
+              //     // Increase timeout to match scroll animation duration
+              //     setTimeout(checkScrollPosition, 500)
+              //   }
+              // }}
+              onClick={() => window.location.href = 'https://github.com/openinterpreter/open-interpreter'}
             >
-              Learn more
-              <ChevronDown className="h-4 w-4" />
+              Powered by Open Interpreter
+              {/* <ChevronDown className="h-4 w-4" /> */}
             </Button>
           </div>
         </div>
@@ -286,8 +282,9 @@ export default function LandingPage() {
         </div>
       </div>
 
+      
       {/* New Features Section */}
-      <section className="flex flex-col items-center mb-32">
+      {/* <section className="flex flex-col items-center mb-32">
         <h2 className="text-5xl font-editorial font-normal mb-8">
           A new way to work
         </h2>
@@ -337,10 +334,10 @@ export default function LandingPage() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Pricing section */}
-      <section className="bg-white mb-32">
+      {/* <section className="bg-white mb-32">
         <div className="container mx-auto px-4">
           <h2 className="text-5xl font-editorial font-normal text-center mb-16">
             Pricing
@@ -386,10 +383,10 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
-      <footer className="bg-neutral-900 text-white py-16">
+      {/* <footer className="bg-neutral-900 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-2">
@@ -424,7 +421,7 @@ export default function LandingPage() {
             <p>© {new Date().getFullYear()} Open Interpreter. All rights reserved.</p>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </>
   )
 }

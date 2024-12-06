@@ -15,7 +15,7 @@ export default function Navigation() {
           </li>
           <li>
             <Link 
-              href="https://github.com/KillianLucas/open-interpreter" 
+              href="https://github.com/openinterpreter/open-interpreter" 
               className="underline"
             >
               CLI

@@ -7,7 +7,7 @@ export default function Footer() {
         <ul className="flex gap-4">
         <li>
             <Link 
-              href="https://github.com/KillianLucas/open-interpreter" 
+              href="https://github.com/openinterpreter/open-interpreter" 
               target="_blank"
             >
               Github
