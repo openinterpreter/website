@@ -106,13 +106,25 @@ export default function LandingPage() {
 
               {/* New download buttons */}
               <div className="space-y-2">
-                <Button variant="outline" className="px-6 justify-center py-6 bg-neutral-900 text-neutral-100 hover:bg-neutral-800 hover:text-white">
+                <Button 
+                  variant="outline" 
+                  className="px-6 justify-center py-6 bg-neutral-900 text-neutral-100 hover:bg-neutral-800 hover:text-white"
+                  onClick={() => window.location.href = cpuType === 'Apple Silicon' 
+                    ? 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-aarch64'
+                    : 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-x86_64'
+                  }
+                >
                   <FontAwesomeIcon icon={faApple} className="scale-90 -translate-y-[0.5px]" />
                   Download for {cpuType || 'Mac'}
                 </Button>
                 
                 <p className="text-center text-xs text-muted-foreground mt-2">
-                  <a href="#" className="underline">
+                  <a 
+                    href={cpuType === 'Apple Silicon' 
+                      ? 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-x86_64'
+                      : 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-aarch64'
+                    }
+                  >
                     Download for {cpuType === 'Apple Silicon' ? 'Intel Mac' : 'Apple Silicon'}
                   </a>
                 </p>
