@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ChevronDown } from 'lucide-react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons'
 
 const useCases = [
   { name: 'Media', color: '#FF6B6B' },
@@ -17,16 +17,47 @@ const useCases = [
 
 export default function LandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [cpuType, setCpuType] = useState<string | null>(null)
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % useCases.length)
     }, 5000)
+
+    // CPU detection with timeout
+    const detectCPU = async () => {
+      try {
+        const timeoutPromise = new Promise<string>((_, reject) => {
+          setTimeout(() => reject(new Error('CPU detection timeout')), 2000)
+        })
+
+        const detectionPromise = new Promise<string>((resolve) => {
+          const canvas = document.createElement('canvas')
+          const gl = canvas.getContext('webgl2')
+          const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info')
+          const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : ''
+          
+          // Add a small delay to ensure WebGL context is properly initialized
+          setTimeout(() => {
+            resolve(renderer.includes('Apple') ? 'Apple Silicon' : 'Intel')
+          }, 100)
+        })
+
+        const result = await Promise.race([detectionPromise, timeoutPromise])
+        setCpuType(result)
+      } catch (error) {
+        console.log('CPU detection failed:', error)
+        setCpuType('Apple Silicon')
+      }
+    }
+
+    detectCPU()
+
     return () => clearInterval(timer)
   }, [])
 
   return (
-    <div className="flex min-h-screen flex-col md:flex-row">
+    <div className="flex min-h-screen flex-col md:flex-row bg-white dark:invert dark:contrast-150">
       {/* Left Section */}
       <div className="relative flex w-full h-screen md:h-auto md:w-1/2 flex-col items-center justify-between p-8 lg:p-12">
         {/* Logo */}
@@ -37,15 +68,16 @@ export default function LandingPage() {
 
         {/* Main content */}
         <div className="flex-1 flex flex-col justify-center">
-          <div className="tracking-tighter max-w-md flex flex-col items-center text-center">
+          <div className={`tracking-tighter max-w-md flex flex-col items-center text-center transition-opacity duration-300 ${cpuType ? 'opacity-100' : 'opacity-0'}`}>
             <h1 className="mb-4 text-5xl font-editorial font-normal">
-              A new way to use your computer
+            Interpreter Actions
             </h1>
             <p className="mb-8 text-lg text-muted-foreground">
-              Let language models control your computer.
+              Securely modify files on your Mac.
             </p>
 
-            <div className="space-y-4 w-full">
+            <div className="space-y-2 w-full flex flex-col items-center">
+              {/* Original sign-in code (commented out)
               <Button variant="outline" className="w-full justify-center">
                 <FontAwesomeIcon icon={faGoogle} className="mr-2" />
                 Continue with Google
@@ -70,10 +102,21 @@ export default function LandingPage() {
               <Button className="w-full bg-foreground hover:bg-foreground/80 text-white">
                 Continue with email
               </Button>
+              */}
 
-              <p className="text-center text-xs text-muted-foreground">
-                By continuing, you agree to Open Interpreter's{' '}<a href="#" className="underline">Consumer Terms</a>{' '}and{' '}<a href="#" className="underline">Usage Policy</a>, and acknowledge their{' '}<a href="#" className="underline">Privacy Policy</a>.
-              </p>
+              {/* New download buttons */}
+              <div className="space-y-2">
+                <Button variant="outline" className="px-6 justify-center py-6 bg-neutral-900 text-neutral-100 hover:bg-neutral-800 hover:text-white">
+                  <FontAwesomeIcon icon={faApple} className="scale-90 -translate-y-[0.5px]" />
+                  Download for {cpuType || 'Mac'}
+                </Button>
+                
+                <p className="text-center text-xs text-muted-foreground mt-2">
+                  <a href="#" className="underline">
+                    Download for {cpuType === 'Apple Silicon' ? 'Intel Mac' : 'Apple Silicon'}
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
