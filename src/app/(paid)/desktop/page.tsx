@@ -250,7 +250,7 @@ export default function LandingPage() {
               // }}
               onClick={() => window.location.href = 'https://github.com/openinterpreter/open-interpreter'}
             >
-              Powered by Open Interpreter
+              Created by the Open Interpreter team
               {/* <ChevronDown className="h-4 w-4" /> */}
             </Button>
           </div>
