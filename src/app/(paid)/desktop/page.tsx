@@ -35,7 +35,7 @@ export default function LandingPage() {
           const canvas = document.createElement('canvas')
           const gl = canvas.getContext('webgl2')
           const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info')
-          const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : ''
+          const renderer = gl && debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : ''
           
           // Add a small delay to ensure WebGL context is properly initialized
           setTimeout(() => {
