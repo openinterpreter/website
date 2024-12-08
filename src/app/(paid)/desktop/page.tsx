@@ -8,11 +8,10 @@ import { faApple } from '@fortawesome/free-brands-svg-icons'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const useCases = [
-  { name: 'Media', color: '#FF6B6B' },
-  { name: 'Freelance', color: '#4ECDC4' },
-  { name: 'Academic', color: '#45B7D1' },
-  { name: 'Corporate', color: '#5D5D5D' },
-  { name: 'Consulting', color: '#6C5CE7' },
+  { 
+    name: 'Documents', 
+    image: '/use-cases/file-conversion.png'
+  },
 ]
 
 const features = [
@@ -257,14 +256,19 @@ export default function LandingPage() {
         </div>
 
         {/* Right Section */}
-        <div
-          className="relative flex w-full h-screen md:h-auto md:w-1/2 items-center justify-center transition-colors duration-500 ease-in-out"
-          style={{ backgroundColor: useCases[currentSlide].color }}
-        >
-          <h2 className="text-4xl font-bold text-white">{useCases[currentSlide].name}</h2>
-
+        <div className="relative flex w-full h-screen md:h-auto md:w-1/2 items-center justify-center">
+          <div 
+            className="absolute inset-0 transition-opacity duration-500 ease-in-out"
+            style={{
+              backgroundImage: `url(${useCases[currentSlide].image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+          </div>
+          
           {/* Use Case Boxes */}
-          <div className="absolute bottom-8 left-4 right-4 flex flex-wrap justify-center gap-2">
+          <div className="absolute bottom-8 left-4 right-4 flex flex-wrap justify-center gap-2 z-10">
             {useCases.map((useCase, index) => (
               <button
                 key={index}
