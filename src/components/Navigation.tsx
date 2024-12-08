@@ -21,14 +21,14 @@ export default function Navigation() {
               CLI
             </Link>
           </li>
-          {/* <li>
+          <li>
             <Link 
               href="/desktop" 
               className="underline"
             >
               Actions
             </Link>
-          </li> */}
+          </li>
           {/* <li>
             <Link 
               href="/events" 
