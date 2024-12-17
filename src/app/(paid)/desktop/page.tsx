@@ -10,8 +10,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 const useCases = [
   { 
     name: 'Documents', 
-    image: '/use-cases/file-conversion.png'
+    type: 'image',
+    image: '/use-cases/file-conversion.png',
+    duration: 5000 // 5 seconds
   },
+  {
+    name: 'Images',
+    type: 'video',
+    videoUrl: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/video/padding.mp4',
+    duration: 18000 // 18 seconds
+  }
 ]
 
 const features = [
@@ -72,6 +80,7 @@ export default function LandingPage() {
   const [cpuType, setCpuType] = useState<string | null>(null)
   const [selectedFeature, setSelectedFeature] = useState(0)
   const [showHeader, setShowHeader] = useState(false)
+  const [progress, setProgress] = useState(0)
 
   // Separate function to check scroll position
   const checkScrollPosition = () => {
@@ -84,8 +93,29 @@ export default function LandingPage() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % useCases.length)
-    }, 5000)
+      setCurrentSlide((prevSlide) => {
+        const nextSlide = (prevSlide + 1) % useCases.length
+        setProgress(0) // Reset progress when timer finishes
+        clearInterval(timer)
+        setTimeout(() => {
+          setCurrentSlide((current) => (current + 1) % useCases.length)
+        }, useCases[nextSlide].duration)
+        return nextSlide
+      })
+    }, useCases[currentSlide].duration)
+
+    // Add progress animation
+    const startTime = Date.now()
+    const animationFrame = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / useCases[currentSlide].duration, 1)
+      setProgress(progress)
+      
+      if (progress < 1) {
+        requestAnimationFrame(animationFrame)
+      }
+    }
+    requestAnimationFrame(animationFrame)
 
     // CPU detection with timeout
     const detectCPU = async () => {
@@ -125,7 +155,7 @@ export default function LandingPage() {
       clearInterval(timer)
       window.removeEventListener('scroll', checkScrollPosition)
     }
-  }, [])
+  }, [currentSlide])
 
   return (
     <>
@@ -233,38 +263,37 @@ export default function LandingPage() {
 
           {/* Learn more button */}
           <div className="absolute bottom-8 left-0 right-0 flex justify-center">
-            <Button
-              variant="outline"
-              className="h-7 px-3 py-1 rounded-lg text-sm font-medium border-gray-200 bg-white text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-300"
-              // onClick={() => {
-              //   const firstSection = document.querySelector('.min-h-screen')
-              //   if (firstSection) {
-              //     window.scrollTo({
-              //       top: firstSection.clientHeight,
-              //       behavior: 'smooth'
-              //     })
-              //     // Increase timeout to match scroll animation duration
-              //     setTimeout(checkScrollPosition, 500)
-              //   }
-              // }}
+            <button
               onClick={() => window.location.href = 'https://github.com/openinterpreter/open-interpreter'}
+              className="px-3 py-1 rounded-lg text-sm shadow-sm transition-colors duration-300 bg-white/80 text-black/80 relative overflow-hidden"
             >
-              Created by the Open Interpreter team
-              {/* <ChevronDown className="h-4 w-4" /> */}
-            </Button>
+              <span className="relative z-10">Created by the Open Interpreter team</span>
+            </button>
           </div>
         </div>
 
         {/* Right Section */}
         <div className="relative flex w-full h-screen md:h-auto md:w-1/2 items-center justify-center">
-          <div 
-            className="absolute inset-0 transition-opacity duration-500 ease-in-out"
-            style={{
-              backgroundImage: `url(${useCases[currentSlide].image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
+          <div className="absolute inset-0 transition-opacity duration-500 ease-in-out">
+            {useCases[currentSlide].type === 'video' ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+                src={useCases[currentSlide].videoUrl}
+              />
+            ) : (
+              <div
+                style={{
+                  backgroundImage: `url(${useCases[currentSlide].image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+                className="w-full h-full"
+              />
+            )}
           </div>
           
           {/* Use Case Boxes */}
@@ -272,14 +301,26 @@ export default function LandingPage() {
             {useCases.map((useCase, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors duration-300 ${
+                onClick={() => {
+                  setProgress(0)
+                  setCurrentSlide(index)
+                }}
+                className={`relative px-3 py-1 rounded-lg text-sm shadow-sm transition duration-300 overflow-hidden ${
                   currentSlide === index
-                    ? 'bg-white text-foreground'
-                    : 'bg-white/20 text-white hover:bg-white hover:text-foreground'
+                    ? 'bg-white/80 text-black shadow-md'
+                    : 'bg-white/50 text-black/50 hover:bg-white/70 hover:text-black/70'
                 }`}
               >
-                {useCase.name}
+                {currentSlide === index && (
+                  <div 
+                    className="absolute left-0 top-0 bottom-0 bg-black/5"
+                    style={{ 
+                      width: `${progress * 100}%`,
+                      zIndex: 20
+                    }}
+                  />
+                )}
+                <span className="relative z-10">{useCase.name}</span>
               </button>
             ))}
           </div>
