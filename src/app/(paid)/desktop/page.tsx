@@ -8,18 +8,18 @@ import { faApple } from '@fortawesome/free-brands-svg-icons'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const useCases = [
+  {
+    name: 'Media',
+    type: 'video',
+    videoUrl: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/video/padding.mp4',
+    duration: 18000 // 18 seconds
+  },
   { 
     name: 'Documents', 
     type: 'image',
     image: '/use-cases/file-conversion.png',
     duration: 5000 // 5 seconds
   },
-  {
-    name: 'Images',
-    type: 'video',
-    videoUrl: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/video/padding.mp4',
-    duration: 18000 // 18 seconds
-  }
 ]
 
 const features = [
@@ -92,58 +92,75 @@ export default function LandingPage() {
   }
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => {
-        const nextSlide = (prevSlide + 1) % useCases.length
-        setProgress(0) // Reset progress when timer finishes
-        clearInterval(timer)
-        setTimeout(() => {
-          setCurrentSlide((current) => (current + 1) % useCases.length)
-        }, useCases[nextSlide].duration)
-        return nextSlide
-      })
-    }, useCases[currentSlide].duration)
+    let timeoutId: NodeJS.Timeout | null = null;
+    
+    const startNextSlide = () => {
+      const nextSlide = (currentSlide + 1) % useCases.length;
+      setProgress(0);
+      setCurrentSlide(nextSlide);
+      
+      // Schedule the next slide
+      timeoutId = setTimeout(() => {
+        startNextSlide();
+      }, useCases[nextSlide].duration);
+    };
 
-    // Add progress animation
-    const startTime = Date.now()
-    const animationFrame = () => {
-      const elapsed = Date.now() - startTime
-      const progress = Math.min(elapsed / useCases[currentSlide].duration, 1)
-      setProgress(progress)
+    // Start the timer for the current slide
+    timeoutId = setTimeout(() => {
+      startNextSlide();
+    }, useCases[currentSlide].duration);
+
+    // Progress animation
+    let animationFrameId: number;
+    const startTime = Date.now();
+    
+    const animateProgress = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / useCases[currentSlide].duration, 1);
+      setProgress(progress);
       
       if (progress < 1) {
-        requestAnimationFrame(animationFrame)
+        animationFrameId = requestAnimationFrame(animateProgress);
       }
+    };
+    
+    animationFrameId = requestAnimationFrame(animateProgress);
+
+    // Cleanup
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+  }, [currentSlide]); // Only depend on currentSlide
+
+  // CPU detection with timeout
+  const detectCPU = async () => {
+    try {
+      const timeoutPromise = new Promise<string>((_, reject) => {
+        setTimeout(() => reject(new Error('CPU detection timeout')), 2000)
+      })
+
+      const detectionPromise = new Promise<string>((resolve) => {
+        const canvas = document.createElement('canvas')
+        const gl = canvas.getContext('webgl2')
+        const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info')
+        const renderer = gl && debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : ''
+        
+        // Add a small delay to ensure WebGL context is properly initialized
+        setTimeout(() => {
+          resolve(renderer.includes('Apple') ? 'Apple Silicon' : 'Intel')
+        }, 100)
+      })
+
+      const result = await Promise.race([detectionPromise, timeoutPromise])
+      setCpuType(result)
+    } catch (error) {
+      console.log('CPU detection failed:', error)
+      setCpuType('Apple Silicon')
     }
-    requestAnimationFrame(animationFrame)
+  }
 
-    // CPU detection with timeout
-    const detectCPU = async () => {
-      try {
-        const timeoutPromise = new Promise<string>((_, reject) => {
-          setTimeout(() => reject(new Error('CPU detection timeout')), 2000)
-        })
-
-        const detectionPromise = new Promise<string>((resolve) => {
-          const canvas = document.createElement('canvas')
-          const gl = canvas.getContext('webgl2')
-          const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info')
-          const renderer = gl && debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : ''
-          
-          // Add a small delay to ensure WebGL context is properly initialized
-          setTimeout(() => {
-            resolve(renderer.includes('Apple') ? 'Apple Silicon' : 'Intel')
-          }, 100)
-        })
-
-        const result = await Promise.race([detectionPromise, timeoutPromise])
-        setCpuType(result)
-      } catch (error) {
-        console.log('CPU detection failed:', error)
-        setCpuType('Apple Silicon')
-      }
-    }
-
+  useEffect(() => {
     detectCPU()
 
     // Check scroll position immediately
@@ -152,7 +169,6 @@ export default function LandingPage() {
     // Add scroll listener
     window.addEventListener('scroll', checkScrollPosition)
     return () => {
-      clearInterval(timer)
       window.removeEventListener('scroll', checkScrollPosition)
     }
   }, [currentSlide])
@@ -273,7 +289,7 @@ export default function LandingPage() {
         </div>
 
         {/* Right Section */}
-        <div className="relative flex w-full h-screen md:h-auto md:w-1/2 items-center justify-center">
+        <div className="#shadow-2xl #shadow-neutral-900/20 relative flex w-full h-screen md:h-auto md:w-1/2 items-center justify-center">
           <div className="absolute inset-0 transition-opacity duration-500 ease-in-out">
             {useCases[currentSlide].type === 'video' ? (
               <video
