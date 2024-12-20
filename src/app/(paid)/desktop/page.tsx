@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faApple } from '@fortawesome/free-brands-svg-icons'
 import { motion, AnimatePresence } from 'framer-motion'
 
+const DOWNLOAD_URLS = {
+  appleSilicon: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/interpreter-actions/Interpreter_0.5.11_aarch64.dmg',
+  intel: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/interpreter-actions/Interpreter_0.5.11_x64.dmg'
+}
+
 const useCases = [
   {
     name: 'Media',
@@ -190,8 +195,8 @@ export default function LandingPage() {
             variant="outline" 
             className="px-6 justify-center py-4 bg-neutral-900 text-neutral-100 hover:bg-neutral-800 hover:text-white"
             onClick={() => window.location.href = cpuType === 'Apple Silicon' 
-              ? 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-aarch64'
-              : 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-x86_64'
+              ? DOWNLOAD_URLS.appleSilicon
+              : DOWNLOAD_URLS.intel
             }
           >
             <FontAwesomeIcon icon={faApple} className="scale-90 -translate-y-[0.5px] -translate-x-[2px]" />
@@ -254,8 +259,8 @@ export default function LandingPage() {
                     variant="outline" 
                     className="px-6 justify-center py-6 bg-neutral-900 text-neutral-100 hover:bg-neutral-800 hover:text-white"
                     onClick={() => window.location.href = cpuType === 'Apple Silicon' 
-                      ? 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-aarch64'
-                      : 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-x86_64'
+                      ? DOWNLOAD_URLS.appleSilicon
+                      : DOWNLOAD_URLS.intel
                     }
                   >
                     <FontAwesomeIcon icon={faApple} className="scale-90 -translate-y-[0.5px] -translate-x-[2px]" />
@@ -265,8 +270,8 @@ export default function LandingPage() {
                   <p className="text-center text-xs text-muted-foreground mt-2 #border-b #border-neutral-300 #w-fit">
                     <a 
                       href={cpuType === 'Apple Silicon' 
-                        ? 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-x86_64'
-                        : 'https://cdn.crabnebula.app/download/open-interpreter/interpreter/latest/platform/dmg-aarch64'
+                        ? DOWNLOAD_URLS.intel
+                        : DOWNLOAD_URLS.appleSilicon
                       }
                     >
                       Download for {cpuType === 'Apple Silicon' ? 'Intel Mac' : 'Apple Silicon'}
