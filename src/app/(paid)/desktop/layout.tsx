@@ -13,6 +13,6 @@ export default function Layout({
 }
 
 export const metadata = {
-  title: 'Interpreter Actions',
+  title: 'Actions',
   description: 'Securely modify files on your Mac.',
 } 
