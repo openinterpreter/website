@@ -14,17 +14,23 @@ const DOWNLOAD_URLS = {
 
 const useCases = [
   {
+    name: 'File Conversion',
+    type: 'video',
+    videoUrl: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/video/convert.mp4',
+    duration: 9000 // 9 seconds
+  },
+  {
     name: 'Media',
     type: 'video',
     videoUrl: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/video/padding.mp4',
     duration: 18000 // 18 seconds
   },
-  { 
-    name: 'Documents', 
-    type: 'image',
-    image: '/use-cases/file-conversion.png',
-    duration: 5000 // 5 seconds
-  },
+  // { 
+  //   name: 'Documents', 
+  //   type: 'image',
+  //   image: '/use-cases/file-conversion.png',
+  //   duration: 5000 // 5 seconds
+  // },
 ]
 
 const features = [
