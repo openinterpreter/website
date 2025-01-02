@@ -12,7 +12,15 @@ const DOWNLOAD_URLS = {
   intel: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/interpreter-actions/Actions_0.5.24_x64.dmg'
 }
 
-const useCases = [
+type UseCase = {
+  name: string;
+  type: 'video' | 'image';
+  videoUrl?: string;
+  image?: string;
+  duration: number;
+}
+
+const useCases: UseCase[] = [
   {
     name: 'File Conversion',
     type: 'video',
