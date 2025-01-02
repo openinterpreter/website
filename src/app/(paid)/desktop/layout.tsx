@@ -12,4 +12,7 @@ export default function Layout({
   )
 }
 
-export const metadata = {} 
+export const metadata = {
+  title: 'Interpreter Actions',
+  description: 'Securely modify files on your Mac.',
+} 
