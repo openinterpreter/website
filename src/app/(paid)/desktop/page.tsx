@@ -21,12 +21,12 @@ type UseCase = {
 }
 
 const useCases: UseCase[] = [
-  {
-    name: 'File Conversion',
-    type: 'video',
-    videoUrl: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/video/convert.mp4',
-    duration: 9000 // 9 seconds
-  },
+  // {
+  //   name: 'File Conversion',
+  //   type: 'video',
+  //   videoUrl: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/video/convert.mp4',
+  //   duration: 9000 // 9 seconds
+  // },
   {
     name: 'Media',
     type: 'video',
@@ -299,7 +299,21 @@ export default function LandingPage() {
           {/* Learn more button */}
           <div className="absolute bottom-8 left-0 right-0 flex justify-center">
             <button
-              onClick={() => window.location.href = 'https://github.com/openinterpreter/open-interpreter'}
+              onClick={() => {
+                const url = 'https://github.com/openinterpreter/open-interpreter';
+                try {
+                  // Try to navigate the parent frame if we're in an iframe
+                  if (window.parent !== window) {
+                    window.parent.location.href = url;
+                  } else {
+                    window.location.href = url;
+                  }
+                } catch (e) {
+                  // If we can't access parent due to same-origin policy,
+                  // open in a new tab instead
+                  window.open(url, '_blank');
+                }
+              }}
               className="px-3 py-1 rounded-lg text-sm shadow-sm transition-colors duration-300 bg-white/80 text-black/80 relative overflow-hidden"
             >
               <span className="relative z-10">Created by the Open Interpreter team</span>
@@ -332,7 +346,7 @@ export default function LandingPage() {
           </div>
           
           {/* Use Case Boxes */}
-          <div className="absolute bottom-8 left-4 right-4 flex flex-wrap justify-center gap-2 z-10">
+          {/* <div className="absolute bottom-8 left-4 right-4 flex flex-wrap justify-center gap-2 z-10">
             {useCases.map((useCase, index) => (
               <button
                 key={index}
@@ -358,7 +372,7 @@ export default function LandingPage() {
                 <span className="relative z-10">{useCase.name}</span>
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 
