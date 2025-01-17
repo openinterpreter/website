@@ -278,17 +278,20 @@ export default function LandingPage() {
                     }
                   >
                     <FontAwesomeIcon icon={faApple} className="scale-90 -translate-y-[0.5px] -translate-x-[2px]" />
-                    Download for {cpuType || 'Mac'}
+                    Download the free Beta
                   </Button>
                   
-                  <p className="text-center text-xs text-muted-foreground mt-2 #border-b #border-neutral-300 #w-fit">
-                    <a 
-                      href={cpuType === 'Apple Silicon' 
-                        ? DOWNLOAD_URLS.intel
-                        : DOWNLOAD_URLS.appleSilicon
-                      }
+                  <p className="text-center text-xs text-muted-foreground mt-2">
+                    Works on <a 
+                      href={DOWNLOAD_URLS.appleSilicon}
+                      className="hover:underline"
                     >
-                      Download for {cpuType === 'Apple Silicon' ? 'Intel Mac' : 'Apple Silicon'}
+                      Apple Silicon
+                    </a> or <a
+                      href={DOWNLOAD_URLS.intel}
+                      className="hover:underline"
+                    >
+                      Intel Mac
                     </a>
                   </p>
                 </div>
