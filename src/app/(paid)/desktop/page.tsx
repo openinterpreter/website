@@ -8,8 +8,8 @@ import { faApple } from '@fortawesome/free-brands-svg-icons'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const DOWNLOAD_URLS = {
-  appleSilicon: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/interpreter-actions/Actions_0.5.24_aarch64.dmg',
-  intel: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/interpreter-actions/Actions_0.5.24_x64.dmg'
+  appleSilicon: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/interpreter-actions/Actions_aarch64.dmg',
+  intel: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/interpreter-actions/Actions_x64.dmg'
 }
 
 type UseCase = {
