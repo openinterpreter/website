@@ -45,7 +45,7 @@ export default function Footer() {
       </div>
       
       <Link
-        href="https://archive.org/details/computer-lib-dream-machines"
+        href="https://archive.org/details/computer-lib-dream-machines/page/n101/mode/2up"
         target="_blank"
         className="hidden md:block"
       >
