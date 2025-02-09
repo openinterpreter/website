@@ -18,16 +18,16 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Preload all pages except /desktop */}
-        <link rel="preload" href="/" as="document" />
+        {/* <link rel="preload" href="/" as="document" />
         <link rel="preload" href="/about" as="document" />
         <link rel="preload" href="/blog" as="document" />
         <link rel="preload" href="/blog/first-post" as="document" />
-        <link rel="preload" href="/blog/second-post" as="document" />
+        <link rel="preload" href="/blog/second-post" as="document" /> */}
         
         {/* Preload critical assets */}
-        <link rel="preload" href="/interpreter.png" as="image" />
+        {/* <link rel="preload" href="/interpreter.png" as="image" />
         <link rel="preload" href="/fonts/PPEditorialNew-Regular.otf" as="font" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/PPEditorialNew-Italic.otf" as="font" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/PPEditorialNew-Italic.otf" as="font" crossOrigin="anonymous" /> */}
       </head>
       <body>
         <div className="default-styles min-h-screen flex flex-col">

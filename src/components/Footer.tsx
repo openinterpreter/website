@@ -23,14 +23,14 @@ export default function Footer() {
           </li>
           <li>
             <Link 
-              href="mailto:help@openinterpreter.com" 
+              href="mailto:killian@openinterpreter.com" 
             >
-              E-Mail
+              Contact
             </Link>
           </li>
         </ul>
         
-        <div>
+        {/* <div>
           <input 
             type="text" 
             placeholder="your@email.com"
@@ -41,12 +41,13 @@ export default function Footer() {
           <button className="text-[14px]">
             Join Mailing List
           </button>
-        </div>
+        </div> */}
       </div>
       
       <Link
         href="https://archive.org/details/computer-lib-dream-machines"
         target="_blank"
+        className="hidden md:block"
       >
         <img 
           src="/interpreter.png"
