@@ -13,6 +13,6 @@ export default function Layout({
 }
 
 export const metadata = {
-  title: 'Actions',
-  description: 'Securely modify files on your Mac.',
+  title: 'Interpreter Workstation',
+  description: 'The AI document editor.',
 } 

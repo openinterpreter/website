@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'PP Editorial New';
+  src: url('/fonts/PPEditorialNew-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PP Editorial New';
+  src: url('/fonts/PPEditorialNew-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* Make PP Editorial New the default serif font */
+.font-editorial {
+  font-family: 'PP Editorial New', serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 29%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+ 
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+ 
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+ 
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+ 
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+ 
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-neutral-900;
+  }
+}
+
+/* Workstation left-panel 3D spreadsheet grid background */
+.workstation-left-grid {
+  --cell-w: 160px;
+  --cell-h: 34px;
+  --grid-line: rgba(0,0,0,.06);
+  --hover-blue: rgba(64,150,255,.11);
+}
+
+.workstation-left-grid .ws-bg-grid-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: auto; /* allow grid interactions beneath overlays */
+}
+
+.workstation-left-grid .ws-grid-3d {
+  position: absolute;
+  inset: -6% -10% -6% -8%;
+  perspective: 1000px;
+}
+
+.workstation-left-grid .ws-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  transform-origin: left center;
+  transform: rotateY(-12deg) rotateZ(1.5deg) translateZ(0);
+  will-change: transform;
+  contain: content;
+  backface-visibility: hidden;
+  pointer-events: auto; /* re-enable events for hover effects */
+}
+
+.workstation-left-grid .ws-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.92), rgba(255,255,255,0) 40%),
+    linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,0) 30%);
+}
+
+.workstation-left-grid .ws-cell {
+  border-right: 1px solid var(--grid-line);
+  border-bottom: 1px solid var(--grid-line);
+  position: relative;
+  background: rgba(0,0,0,.01);
+  transition: box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.workstation-left-grid .ws-cell:hover {
+  background: rgba(173,216,230,.05);
+}
+
+.workstation-left-grid .ws-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 0.5px var(--hover-blue),
+    inset 0 12px 18px -12px rgba(64,150,255,.11),
+    inset 0 -12px 18px -12px rgba(64,150,255,.09);
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.workstation-left-grid .ws-cell:hover::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workstation-left-grid .ws-grid {
+    transform: none;
+  }
+}
+
+/* Subtle centered radial white glow to aid readability */
+.workstation-left-grid .ws-center-glow {
+  position: absolute;
+  inset: 0;
+  display: block;
+  z-index: 1; /* below grid lighting overlay (z=2) and below content (z>=10) */
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center,
+      rgba(255,255,255,0.35) 0%,
+      rgba(255,255,255,0.28) 20%,
+      rgba(255,255,255,0.16) 38%,
+      rgba(255,255,255,0.08) 52%,
+      rgba(255,255,255,0.04) 65%,
+      rgba(255,255,255,0) 80%);
+  filter: blur(16px);
+}
+
+/* Selection overlay layer and boxes */
+.workstation-left-grid .ws-selection-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3; /* above grid lighting overlay */
+  pointer-events: none;
+}
+
+.workstation-left-grid .ws-selection-box {
+  position: absolute;
+  border: 1.5px solid rgba(64,150,255,.65);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.85) inset,
+    0 0 0 2px rgba(64,150,255,.18) inset,
+    0 10px 24px -16px rgba(64,150,255,.25);
+  background: rgba(64,150,255,.06);
+}
+
+/* During dragging, make content block click-through so elementFromPoint hits the grid */
+.workstation-left-grid.ws-dragging .ws-content-block {
+  pointer-events: none;
+}
