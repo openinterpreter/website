@@ -445,7 +445,8 @@ export default function LandingPage() {
                   </button>
                   
                   <p className="text-center text-xs text-neutral-500 mt-2">
-                    Works on <a 
+                    Windows version on 9/22.
+                    {/* Works on <a 
                       href={DOWNLOAD_URLS.appleSilicon}
                       className="hover:underline"
                     >
@@ -455,7 +456,7 @@ export default function LandingPage() {
                       className="hover:underline"
                     >
                       Intel Mac
-                    </a>
+                    </a> */}
                   </p>
                 </div>
               </div>
