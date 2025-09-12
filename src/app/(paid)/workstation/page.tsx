@@ -396,12 +396,12 @@ export default function LandingPage() {
               >
                 <img src="/icon.png" alt="Interpreter Workstation icon" className="w-32 h-32" />
               </motion.button>
-              <h1 className="mb-3 text-4xl">
+              <h1 className="mb-5 text-4xl">
               <span className="font-light">Interpreter</span> <span className="font-medium">Workstation</span>
               </h1>
-              <p className="mb-8 text-xl text-neutral-600">
+              {/* <p className="mb-8 text-xl text-neutral-600">
               The AI document editor.
-              </p>
+              </p> */}
 
               <div className="space-y-2 w-full flex flex-col items-center">
                 {/* Original sign-in code (commented out)
@@ -445,7 +445,7 @@ export default function LandingPage() {
                   </button>
                   
                   <p className="text-center text-xs text-neutral-500 mt-2">
-                    Windows version on 9/22.
+                    Windows version on 9/25.
                     {/* Works on <a 
                       href={DOWNLOAD_URLS.appleSilicon}
                       className="hover:underline"
