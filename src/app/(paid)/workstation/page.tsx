@@ -6,7 +6,7 @@ import { faApple } from '@fortawesome/free-brands-svg-icons'
 import { motion } from 'framer-motion'
 
 const DOWNLOAD_URLS = {
-  appleSilicon: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/workstationupdater/releases/Interpreter%20Workstation-arm64-0.1.0.dmg',
+  appleSilicon: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/workstationupdater/releases/Interpreter%20Workstation-arm64-0.1.1.dmg',
   intel: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/workstationupdater/releases/Interpreter%20Workstation-x64-0.1.0.dmg'
 }
 
