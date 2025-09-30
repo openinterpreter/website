@@ -6,8 +6,9 @@ import { faApple } from '@fortawesome/free-brands-svg-icons'
 import { motion } from 'framer-motion'
 
 const DOWNLOAD_URLS = {
-  appleSilicon: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/workstationupdater/releases/Interpreter%20Workstation-arm64-0.1.4.dmg',
-  intel: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/workstationupdater/releases/Interpreter%20Workstation-x64-0.1.4.dmg'
+  appleSilicon: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/workstationupdater/releases/Interpreter-Workstation-arm64.dmg',
+  intel: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/workstationupdater/releases/Interpreter-Workstation-x64.dmg',
+  windows: 'https://neyguovvcjxfzhqpkicj.supabase.co/storage/v1/object/public/workstationupdater/releases/Interpreter-Workstation-x64.exe'
 }
 
 
@@ -295,7 +296,9 @@ function BackgroundGrid() {
 
 export default function LandingPage() {
   const [cpuType, setCpuType] = useState<string | null>(null)
+  const [osType, setOsType] = useState<'windows' | 'mac' | null>(null)
   const [showHeader, setShowHeader] = useState(false)
+  const [showMacDetails, setShowMacDetails] = useState(false)
 
   // Separate function to check scroll position
   const checkScrollPosition = () => {
@@ -306,36 +309,43 @@ export default function LandingPage() {
     }
   }
 
+  // OS and CPU detection
+  const detectPlatform = async () => {
+    // Detect OS
+    const userAgent = window.navigator.userAgent
+    const isWindows = userAgent.indexOf('Windows') !== -1
+    setOsType(isWindows ? 'windows' : 'mac')
 
-  // CPU detection with timeout
-  const detectCPU = async () => {
-    try {
-      const timeoutPromise = new Promise<string>((_, reject) => {
-        setTimeout(() => reject(new Error('CPU detection timeout')), 2000)
-      })
+    // For Mac, detect CPU type
+    if (!isWindows) {
+      try {
+        const timeoutPromise = new Promise<string>((_, reject) => {
+          setTimeout(() => reject(new Error('CPU detection timeout')), 2000)
+        })
 
-      const detectionPromise = new Promise<string>((resolve) => {
-        const canvas = document.createElement('canvas')
-        const gl = canvas.getContext('webgl2')
-        const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info')
-        const renderer = gl && debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : ''
-        
-        // Add a small delay to ensure WebGL context is properly initialized
-        setTimeout(() => {
-          resolve(renderer.includes('Apple') ? 'Apple Silicon' : 'Intel')
-        }, 100)
-      })
+        const detectionPromise = new Promise<string>((resolve) => {
+          const canvas = document.createElement('canvas')
+          const gl = canvas.getContext('webgl2')
+          const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info')
+          const renderer = gl && debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : ''
+          
+          // Add a small delay to ensure WebGL context is properly initialized
+          setTimeout(() => {
+            resolve(renderer.includes('Apple') ? 'Apple Silicon' : 'Intel')
+          }, 100)
+        })
 
-      const result = await Promise.race([detectionPromise, timeoutPromise])
-      setCpuType(result)
-    } catch (error) {
-      console.log('CPU detection failed:', error)
-      setCpuType('Apple Silicon')
+        const result = await Promise.race([detectionPromise, timeoutPromise])
+        setCpuType(result)
+      } catch (error) {
+        console.log('CPU detection failed:', error)
+        setCpuType('Apple Silicon')
+      }
     }
   }
 
   useEffect(() => {
-    detectCPU()
+    detectPlatform()
 
     // Check scroll position immediately
     checkScrollPosition()
@@ -358,13 +368,20 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 h-16 flex items-center justify-end">
           <button 
             className="pl-3 pr-4 py-2 rounded-none gap-1 bg-transparent text-neutral-600 border border-neutral-300 hover:bg-neutral-100 duration-0 text-sm inline-flex items-center"
-            onClick={() => window.location.href = cpuType === 'Apple Silicon' 
-              ? DOWNLOAD_URLS.appleSilicon
-              : DOWNLOAD_URLS.intel
-            }
+            onClick={() => {
+              if (osType === 'windows') {
+                window.location.href = DOWNLOAD_URLS.windows
+              } else {
+                window.location.href = cpuType === 'Apple Silicon' 
+                  ? DOWNLOAD_URLS.appleSilicon
+                  : DOWNLOAD_URLS.intel
+              }
+            }}
           >
-            <FontAwesomeIcon icon={faApple} />
-            <span className="font-medium tracking-tight ml-1">Free Download</span>
+            {osType === 'mac' && <FontAwesomeIcon icon={faApple} />}
+            <span className="font-medium tracking-tight ml-1">
+              {osType === 'windows' ? 'Download for Windows' : 'Free Download'}
+            </span>
           </button>
         </div>
       </div>
@@ -378,7 +395,7 @@ export default function LandingPage() {
 
           {/* Main content */}
           <div className="flex-1 flex flex-col justify-center relative z-10 pointer-events-none">
-            <div className={`ws-content-block tracking-tighter max-w-md flex flex-col items-center text-center transition-opacity duration-300 text-neutral-600 ${cpuType ? 'opacity-100' : 'opacity-0'} pointer-events-auto`}>
+            <div className={`ws-content-block tracking-tighter max-w-md flex flex-col items-center text-center transition-opacity duration-300 text-neutral-600 ${osType ? 'opacity-100' : 'opacity-0'} pointer-events-auto`}>
               <motion.button
                 type="button"
                 aria-label="Download Interpreter Workstation"
@@ -388,9 +405,13 @@ export default function LandingPage() {
                 transition={{ duration: 0.4, ease: 'easeOut', delay: 0.05 }}
                 whileTap={{ y: -1 }}
                 onClick={() => {
-                  window.location.href = cpuType === 'Apple Silicon'
-                    ? DOWNLOAD_URLS.appleSilicon
-                    : DOWNLOAD_URLS.intel
+                  if (osType === 'windows') {
+                    window.location.href = DOWNLOAD_URLS.windows
+                  } else {
+                    window.location.href = cpuType === 'Apple Silicon'
+                      ? DOWNLOAD_URLS.appleSilicon
+                      : DOWNLOAD_URLS.intel
+                  }
                 }}
                 className="mb-4 cursor-pointer p-0 bg-transparent border-0 focus:outline-none"
               >
@@ -435,29 +456,73 @@ export default function LandingPage() {
                 <div className="space-y-2 mt-2 flex flex-col items-center">
                   <button 
                     className="pl-4 pr-5 py-3 rounded-none gap-1 bg-transparent border border-neutral-300 text-neutral-600 hover:bg-neutral-100 duration-0 text-sm inline-flex items-center"
-                    onClick={() => window.location.href = cpuType === 'Apple Silicon' 
-                      ? DOWNLOAD_URLS.appleSilicon
-                      : DOWNLOAD_URLS.intel
-                    }
+                    onClick={() => {
+                      if (osType === 'windows') {
+                        window.location.href = DOWNLOAD_URLS.windows
+                      } else {
+                        window.location.href = cpuType === 'Apple Silicon' 
+                          ? DOWNLOAD_URLS.appleSilicon
+                          : DOWNLOAD_URLS.intel
+                      }
+                    }}
                   >
-                    <FontAwesomeIcon icon={faApple} />
-                    <span className="font-medium tracking-tight ml-1">Free Download</span>
+                    {osType === 'mac' && <FontAwesomeIcon icon={faApple} />}
+                    <span className="font-medium tracking-tight ml-1">
+                      {osType === 'windows' ? 'Download for Windows' : 'Free Download'}
+                    </span>
                   </button>
                   
-                  <p className="text-center text-xs text-neutral-500 mt-2">
-                    Windows version on 9/25.
-                    {/* Works on <a 
-                      href={DOWNLOAD_URLS.appleSilicon}
-                      className="hover:underline"
-                    >
-                      Apple Silicon
-                    </a> or <a
-                      href={DOWNLOAD_URLS.intel}
-                      className="hover:underline"
-                    >
-                      Intel Mac
-                    </a> */}
-                  </p>
+                  <motion.div 
+                    className="text-center text-xs text-neutral-500 mt-2"
+                    initial={false}
+                    animate={{ opacity: 1 }}
+                  >
+                    {!showMacDetails ? (
+                      <p>
+                        Works on{' '}
+                        <a 
+                          href={DOWNLOAD_URLS.windows}
+                          className="hover:underline"
+                        >
+                          Windows
+                        </a>
+                        {' '}and{' '}
+                        <button
+                          onClick={() => setShowMacDetails(true)}
+                          className="hover:underline underline-offset-2 cursor-pointer"
+                        >
+                          Mac
+                        </button>
+                      </p>
+                    ) : (
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <button
+                          onClick={() => setShowMacDetails(false)}
+                          className="hover:underline mr-1"
+                        >
+                          &lt;
+                        </button>
+                        Works on{' '}
+                        <a 
+                          href={DOWNLOAD_URLS.appleSilicon}
+                          className="hover:underline"
+                        >
+                          Apple Silicon
+                        </a>
+                        {' '}or{' '}
+                        <a
+                          href={DOWNLOAD_URLS.intel}
+                          className="hover:underline"
+                        >
+                          Intel Mac
+                        </a>
+                      </motion.p>
+                    )}
+                  </motion.div>
                 </div>
               </div>
             </div>
