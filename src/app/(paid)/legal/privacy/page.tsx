@@ -1,83 +1,164 @@
 export default function PrivacyPage() {
     return (
       <div>
-        <h2 id="open-interpreter-privacy-policy">Open Interpreter Privacy Policy</h2>
-        <p><strong>Last Updated:</strong> October 25, 2024</p>
-        <h2 id="introduction">Introduction</h2>
-        <p>Open Interpreter Inc. (&quot;Open Interpreter,&quot; &quot;we,&quot; &quot;our,&quot; and/or &quot;us&quot;) values the privacy of individuals who use our application, websites, and related services (collectively, our &quot;Services&quot;). This privacy policy (the “Privacy Policy”) explains how we collect, use, and disclose information from users of our Services. By using our Services, you agree to the collection, use, disclosure, and procedures this Privacy Policy describes. Beyond the Privacy Policy, your use of our Services is also subject to our Terms of Service.</p>
-        <h2 id="information-we-collect">Information We Collect</h2>
-        <p>We may collect a variety of information from or about you or your devices from various sources, as described below.</p>
-        <h3 id="a-information-you-provide-to-us">A. Information You Provide to Us</h3>
-        <ul>
-        <li><strong>Registration and Profile Information</strong>: When you sign up for an account, register to use our Services, sign up for notifications or updates, or participate in our surveys, we may ask you for information such as your name and e-mail address.</li>
-        <li><strong>Communications</strong>: If you contact us directly, we may receive additional information about you, such as your name, email address, phone number, the contents of a message or attachments that you may send to us, and other information you choose to provide. When you communicate with us online, third-party vendors receive and store these communications on our behalf. If you subscribe to our newsletter, we will collect certain information from you, such as your email address. When we send you emails, we may track whether you open them to learn how to deliver a better customer experience and improve our Services.</li>
-        <li><strong>Payment Information</strong>: If you make a purchase through our Services, your payment-related information, such as credit card or other financial information, is collected by our third-party payment processor on our behalf.</li>
-        <li><strong>User Inputs</strong>: When you make inputs into large language models using our Services, we may collect those inputs.</li>
-        </ul>
-        <h3 id="b-information-we-collect-when-you-use-our-services">B. Information We Collect When You Use Our Services</h3>
-        <ul>
-        <li><strong>Location Information</strong>: When you use our Services, we infer your general location information, for example, by using your internet protocol (IP) address.</li>
-        <li><strong>Device Information</strong>: We receive information about the device and software you use to access our Services, including IP address, web browser type, operating system version, application installations (such as command line tools we check and install if necessary), and relevant desktop-specific identifiers. Additionally, if the language model executes code that reveals the contents of files on your computer, we may receive this information as well. It is important to carefully consider which permissions are granted, as allowing file access means that the application can see, modify, or delete files on your system. <strong>By approving these actions, you acknowledge that you understand the potential consequences, including unintended system modifications or data loss.</strong></li>
-        <li><strong>Usage Information</strong>: To help us understand how you use our Services and to help us improve them, we automatically receive information about your interactions with our Services, like the pages or other content you view, the searches you conduct, and the dates and times of your visits.</li>
-        <li><strong>Information from Cookies and Similar Technologies</strong>: Since this is a desktop application, we may use local storage or similar technologies to store user settings and preferences.</li>
-        </ul>
-        <h3 id="c-information-we-receive-from-other-sources">C. Information We Receive from Other Sources</h3>
-        <ul>
-        <li><strong>Information from Third-Party Services</strong>: If you choose to link our Services to a third-party account, we may receive information about you, including your profile information and your use of the third-party account. If you wish to limit the information available to us, you should visit the privacy settings of your third-party accounts to learn about your options.</li>
-        </ul>
-        <h2 id="how-we-use-the-information-we-collect">How We Use the Information We Collect</h2>
-        <p>We use the information we collect for the following purposes:</p>
-        <ul>
-        <li><strong>To train models using user inputs</strong>, including those that interact with your local files.</li>
-        <li><strong>To provide, maintain, improve, and enhance our Services</strong>.</li>
-        <li><strong>To personalize your experience</strong> on our Services by providing tailored content and recommendations.</li>
-        <li><strong>To understand and analyze how you use our Services</strong> and develop new products, services, features, and functionality.</li>
-        <li><strong>To communicate with you</strong>, provide you with updates and other information relating to our Services, provide information that you request, respond to comments and questions, and otherwise provide customer support.</li>
-        <li><strong>To facilitate the connection of third-party services or applications</strong>.</li>
-        <li><strong>To generate anonymized, aggregate data</strong> containing only de-identified, non-personal information that we may use for any lawful purpose.</li>
-        <li><strong>To facilitate transactions and payments</strong>.</li>
-        <li><strong>To find and prevent fraud and abuse</strong>, and respond to trust and safety issues that may arise.</li>
-        <li><strong>For compliance purposes</strong>, including enforcing our Terms of Service or other legal rights, or as may be required by applicable laws and regulations or requested by any judicial process or governmental agency.</li>
-        <li><strong>For other purposes</strong> for which we provide specific notice at the time the information is collected.</li>
-        </ul>
-        <h2 id="how-we-disclose-the-information-we-collect">How We Disclose the Information We Collect</h2>
-        <p>We may disclose the information we collect as follows:</p>
-        <h3 id="1-affiliates">1. Affiliates</h3>
-        <p>We may disclose any information we receive to our affiliates for any of the purposes described in this Privacy Policy.</p>
-        <h3 id="2-vendors-and-service-providers">2. Vendors and Service Providers</h3>
-        <p>We may disclose any information we receive to vendors and service providers retained in connection with the provision of our Services.</p>
-        <h3 id="3-third-party-app-integrations">3. Third-Party App Integrations</h3>
-        <p>If you connect a third-party application to our Services, we may disclose certain information to that third party.</p>
-        <h3 id="4-analytics-partners">4. Analytics Partners</h3>
-        <p>We use analytics services such as Mixpanel to collect and process certain analytics data. You can learn more about their practices by visiting the <a href="https://mixpanel.com/legal/privacy-policy/">Mixpanel Privacy Policy</a>.</p>
-        <h3 id="5-legal-requirements-and-similar-disclosures">5. Legal Requirements and Similar Disclosures</h3>
-        <p>We may access, preserve, and disclose your information if we believe doing so is required or appropriate to: (a) comply with law enforcement requests and legal process, such as a court order or subpoena; (b) respond to your requests; or (c) protect your, our, or others’ rights, property, or safety.</p>
-        <h3 id="6-merger-sale-or-other-asset-transfers">6. Merger, Sale, or Other Asset Transfers</h3>
-        <p>We may transfer your information to service providers, advisors, potential transactional partners, or other third parties in connection with the consideration, negotiation, or completion of a corporate transaction in which we are acquired by or merged with another company or we sell, liquidate, or transfer all or a portion of our assets.</p>
-        <h3 id="7-consent">7. Consent</h3>
-        <p>We may also disclose your information with your permission.</p>
-        <h2 id="your-choices">Your Choices</h2>
-        <ul>
-        <li><strong>Location Information</strong>: You can prevent your device from sharing precise location information at any time through your device’s operating system settings.</li>
-        <li><strong>Use of Inputs for Model Training</strong>: You can opt-out of your inputs being used for model training by changing your settings.</li>
-        <li><strong>Marketing Communications</strong>: You can unsubscribe from our promotional emails via the link provided in the emails. Even if you opt out of receiving promotional messages from us, you will continue to receive administrative messages from us.</li>
-        <li><strong>Service Limitations</strong>: If you choose not to provide us with information we request, some features of our Services may not work as intended.</li>
-        </ul>
-        <h2 id="third-parties">Third Parties</h2>
-        <p>Our Services may contain links to other websites, products, or services that we do not own or operate. We are not responsible for the privacy practices of these third parties. Please be aware that this Privacy Policy does not apply to your activities on these third-party services or any information you disclose to these third parties. We encourage you to read their privacy policies before providing any information to them.</p>
-        <h2 id="security">Security</h2>
-        <p>We make reasonable efforts to protect your information by using physical and electronic safeguards designed to improve the security of the information we maintain. However, given the nature of our Services, there is an inherent risk that executing code on your computer could lead to unintended consequences, such as modification or deletion of files. By using our Services, you acknowledge and accept this risk, including the possibility of data loss or system instability. <strong>Open Interpreter Inc. disclaims any liability for damages or losses resulting from the use of the Services.</strong> However, because no electronic transmission or storage of information can be entirely secure, we can make no guarantees as to the security or privacy of your information.</p>
-        <h2 id="children-s-privacy">Children’s Privacy</h2>
-        <p>We do not knowingly collect, maintain, or use personal information from children under 13 years of age, and no part of our Services is directed to children. If you learn that a child has provided us with personal information in violation of this Privacy Policy, then you may alert us at <a href="mailto\:help@openinterpreter.com">help@openinterpreter.com</a>.</p>
-        <h2 id="international-visitors">International Visitors</h2>
-        <p>Our Services are hosted in the United States (“U.S.”) and intended for visitors located within the U.S. If you choose to use the Services from the European Union or other regions of the world with laws governing data collection and use that may differ from U.S. law, then please note that you are transferring your personal information outside of those regions to the U.S. for storage and processing. We may also transfer your data from the U.S. to other countries or regions in connection with storage and processing of data, fulfilling your requests, and operating the Services. By providing any information, including personal information, on or to the Services, you consent to such transfer, storage, and processing.</p>
-        <h2 id="update-your-information">Update Your Information</h2>
-        <p>You can update your account and profile information through your profile settings.</p>
-        <h2 id="changes-to-this-privacy-policy">Changes to this Privacy Policy</h2>
-        <p>We will post any adjustments to the Privacy Policy on this page, and the revised version will be effective when it is posted. If we materially change the ways in which we use or disclose personal information previously collected from you through the Services, we will notify you through the Services, by email, or other communication.</p>
-        <h2 id="contact-information">Contact Information</h2>
-        <p>If you have any questions, comments, or concerns about our processing activities, please email us at <a href="mailto\:help@openinterpreter.com">help@openinterpreter.com</a> or write to us at our address.</p>
+        <h1 id="interpreter-workstation-privacy-policy">Interpreter Workstation Privacy Policy</h1>
+        <p><strong>Last Updated: January 21, 2026</strong></p>
 
+        <h2 id="introduction">Introduction</h2>
+        <p>Open Interpreter Inc. (&quot;Open Interpreter,&quot; &quot;we,&quot; &quot;our,&quot; and/or &quot;us&quot;) values your privacy. This Privacy Policy explains how we collect, use, and disclose information when you use Interpreter Workstation and related services (collectively, our &quot;Services&quot;).</p>
+        <p>Interpreter Workstation is designed to run locally on your device. Your documents and files remain on your device <strong>unless you choose to send content to an AI provider</strong> (for example, by using our hosted models or by connecting your own API key).</p>
+
+        <h2 id="at-a-glance">At a Glance</h2>
+        <ul>
+          <li><strong>Local models:</strong> Your documents, prompts, and AI responses stay on your device.</li>
+          <li><strong>Bring your own API key:</strong> Your content is sent <strong>directly from your device</strong> to the AI provider; it does <strong>not</strong> pass through our servers.</li>
+          <li><strong>Hosted models:</strong> Your content is routed through our servers to the AI provider and back. <strong>We log full hosted requests and responses (including attachments and metadata) for up to 30 days</strong>, then delete them.</li>
+          <li><strong>Telemetry &amp; crash reports:</strong> Optional and controlled by you. If you choose &quot;Keep everything private,&quot; we do not collect telemetry or crash reports.</li>
+        </ul>
+
+        <h2 id="how-interpreter-workstation-handles-your-data">How Interpreter Workstation Handles Your Data</h2>
+
+        <h3 id="1-local-processing">1) Local Processing (Local Models)</h3>
+        <p>When you use Interpreter Workstation with a local AI model, your documents, prompts, and AI responses are processed on your device and do not leave it. We do not have access to this content.</p>
+
+        <h3 id="2-using-your-own-api-key">2) Using Your Own API Key (Direct-to-Provider)</h3>
+        <p>If you connect your own API key for an AI provider (for example, OpenAI or Anthropic), your prompts and any document content you include are sent <strong>directly from your device to that provider</strong> to generate a response. This content does <strong>not</strong> pass through Open Interpreter&apos;s servers, and we do not receive or store it.</p>
+        <blockquote>
+          <p>Note: The AI provider&apos;s handling of that data is governed by their own terms and privacy policy.</p>
+        </blockquote>
+
+        <h3 id="3-hosted-models">3) Hosted Models (Routed Through Our Servers)</h3>
+        <p>If you use Interpreter Workstation&apos;s hosted AI models, your prompts and any document content you include are sent <strong>through our servers</strong> to the AI model provider and back to you.</p>
+        <p><strong>For hosted model usage, we log and retain:</strong></p>
+        <ul>
+          <li><strong>Full prompts</strong></li>
+          <li><strong>Full model responses</strong></li>
+          <li><strong>Attachments and document content you include in the request</strong></li>
+          <li><strong>Metadata</strong>, such as timestamps, model identifiers, token counts, request/response sizes, and technical/security logs (including IP address and device/network information)</li>
+        </ul>
+        <p><strong>Retention:</strong> We retain hosted request logs for up to <strong>30 days</strong> for safety monitoring, debugging, reliability, and abuse prevention. After 30 days, this data is automatically deleted.</p>
+        <p><strong>No training by Open Interpreter:</strong> Open Interpreter does not use your prompts, documents, attachments, or AI responses to train AI models.</p>
+        <p><strong>AI provider processing:</strong> When you use hosted models, your content is processed by the selected AI provider under their terms and policies.</p>
+
+        <h3 id="4-telemetry-and-diagnostics">4) Telemetry &amp; Diagnostics (Your Choice)</h3>
+        <p>During setup and in Settings, you choose whether to share telemetry and diagnostics.</p>
+        <p>We use the term <strong>&quot;telemetry&quot;</strong> to mean usage analytics and diagnostic data that helps us understand how the app is used and how it&apos;s performing. Telemetry may be <strong>pseudonymous</strong> (for example, associated with a random identifier) and may include limited technical identifiers used for reliability and security.</p>
+
+        <h4 id="if-you-choose-keep-everything-private">If you choose &quot;Keep everything private&quot;</h4>
+        <ul>
+          <li><strong>No telemetry is sent.</strong></li>
+          <li><strong>No crash reports are sent automatically.</strong></li>
+          <li>If a crash occurs, you may be offered the option to share a crash report; <strong>if you decline, nothing is sent</strong>.</li>
+        </ul>
+
+        <h4 id="if-you-choose-help-improve">If you choose &quot;Help improve Interpreter Workstation&quot;</h4>
+        <p>We collect telemetry such as:</p>
+        <ul>
+          <li>Which features you use (events like &quot;opened editor,&quot; &quot;ran command,&quot; etc.)</li>
+          <li>Session duration and performance metrics</li>
+          <li>Basic system information (operating system, app version, device type)</li>
+          <li><strong>Crash reports (only if you choose to send them)</strong></li>
+        </ul>
+        <p><strong>We do not intentionally collect via telemetry:</strong></p>
+        <ul>
+          <li>Your documents or file contents</li>
+          <li>Prompts you send to AI models</li>
+          <li>AI model responses</li>
+          <li>Attachment contents</li>
+        </ul>
+        <blockquote>
+          <p>Important: Crash reports can sometimes include technical details (for example, error messages, stack traces, device/OS details, and in some cases file paths). You control whether crash reports are sent.</p>
+        </blockquote>
+
+        <h2 id="information-we-collect">Information We Collect</h2>
+
+        <h3 id="a-information-you-provide">A) Information You Provide to Us</h3>
+        <p><strong>Account Information:</strong> If you create an account, we collect your name and email address.</p>
+        <p><strong>Payment Information:</strong> If you purchase a subscription, our third-party payment processor collects and processes your payment information. We do not store your full credit card number.</p>
+        <p><strong>Communications:</strong> If you contact us for support, we receive your name, email address, and the contents of your message.</p>
+
+        <h3 id="b-information-we-collect-automatically">B) Information We Collect Automatically</h3>
+        <p><strong>Hosted Model Request Logs (if you use hosted models):</strong> As described above, we log full hosted requests/responses, attachments you include, and metadata for up to 30 days.</p>
+        <p><strong>Telemetry &amp; Crash Reports (if enabled and sent by you):</strong> As described above.</p>
+        <p><strong>Security / Operational Logs:</strong> We may process technical data (such as IP address, device/network information, timestamps, and event records) as needed to protect our Services, prevent abuse, and maintain reliability.</p>
+
+        <h2 id="how-we-use-information">How We Use Information</h2>
+        <p>We use information we collect to:</p>
+        <ul>
+          <li>Provide and maintain our Services</li>
+          <li>Authenticate accounts and process transactions</li>
+          <li>Respond to requests and provide customer support</li>
+          <li>Monitor, debug, and improve reliability, performance, and security</li>
+          <li>Detect, prevent, and investigate fraud, abuse, and security incidents</li>
+          <li>Comply with legal obligations</li>
+        </ul>
+        <p><strong>We do not use your documents, prompts, attachments, or AI responses to train AI models.</strong></p>
+
+        <h2 id="how-we-share-information">How We Share Information</h2>
+        <p>We may share information with:</p>
+        <p><strong>Service Providers:</strong> Vendors who help us operate our Services (for example, cloud hosting, analytics, crash reporting, and payment processing). These providers are required to protect your information and use it only to provide services to us.</p>
+        <p><strong>AI Model Providers:</strong> If you use hosted models, your prompts, document content you include, and attachments you include are sent to the relevant AI provider to generate responses. These providers have their own terms and privacy policies.</p>
+        <p><strong>Legal Requirements:</strong> We may disclose information if required by law or in response to valid legal process (such as a subpoena or court order).</p>
+        <p><strong>Business Transfers:</strong> If Open Interpreter is involved in a merger, acquisition, financing, reorganization, or sale of assets, information may be transferred as part of that transaction.</p>
+        <p>We do not sell your personal information.</p>
+
+        <h2 id="data-retention">Data Retention</h2>
+        <ul>
+          <li><strong>Hosted model logs:</strong> retained up to <strong>30 days</strong>, then deleted.</li>
+          <li><strong>Account information:</strong> retained while your account is active and as needed to provide the Services.</li>
+          <li><strong>Support communications:</strong> retained as needed to address your request and maintain support records.</li>
+          <li><strong>Telemetry/diagnostics:</strong> retained as needed for the purposes described above and periodically deleted or de-identified.</li>
+        </ul>
+
+        <h2 id="your-choices">Your Choices</h2>
+        <p><strong>Telemetry &amp; Crash Reports:</strong> You can enable or disable telemetry at any time in Settings. Crash reports are only sent with your permission. If you choose not to send crash reports, we do not receive them.</p>
+        <p><strong>Hosted vs. Local Models:</strong> You choose whether to use local models, connect your own API keys, or use our hosted models.</p>
+        <p><strong>Account Deletion:</strong> You can request deletion by contacting us at <a href="mailto:help@openinterpreter.com">help@openinterpreter.com</a>. We will delete or de-identify personal information within 30 days of verifying your request, except where we are required or permitted to retain information by law (for example, for tax, accounting, or security purposes).</p>
+
+        <h2 id="privacy-rights-by-region">Privacy Rights by Region</h2>
+        <p>Depending on where you live, you may have certain privacy rights regarding your personal information. These may include the right to:</p>
+        <ul>
+          <li>Access your personal information</li>
+          <li>Correct inaccurate information</li>
+          <li>Request deletion of your personal information</li>
+          <li>Obtain a copy of your personal information (portability)</li>
+          <li>Object to or restrict certain processing</li>
+          <li>Withdraw consent where processing is based on consent (for example, telemetry)</li>
+        </ul>
+
+        <h3 id="us-state-privacy-rights">U.S. State Privacy Rights (e.g., California and similar laws)</h3>
+        <p>If applicable, your rights may include:</p>
+        <ul>
+          <li>The right to know what personal information we collect, use, and disclose</li>
+          <li>The right to delete personal information (subject to exceptions)</li>
+          <li>The right to correct inaccurate personal information</li>
+          <li>The right to opt out of certain disclosures that may be considered &quot;selling&quot; or &quot;sharing&quot; under some laws (we do not sell personal information)</li>
+        </ul>
+
+        <h3 id="eea-uk-gdpr">EEA/UK (GDPR) Notice</h3>
+        <p>If you are located in the EEA or UK, we process personal information under one or more legal bases, including:</p>
+        <ul>
+          <li><strong>Contract</strong> (to provide the Services you request)</li>
+          <li><strong>Legitimate interests</strong> (to secure, maintain, and improve the Services)</li>
+          <li><strong>Consent</strong> (for optional telemetry and any optional crash reporting you choose to send)</li>
+          <li><strong>Legal obligation</strong> (where required)</li>
+        </ul>
+        <p>If you have questions about your rights or wish to exercise them, contact us at <a href="mailto:help@openinterpreter.com">help@openinterpreter.com</a>. You may also have the right to lodge a complaint with your local data protection authority.</p>
+
+        <h2 id="data-security">Data Security</h2>
+        <p>We use reasonable administrative, technical, and physical safeguards designed to protect your information, including encryption in transit (TLS) and encryption at rest for data we store. However, no method of transmission or storage is completely secure. By using our Services, you acknowledge this risk.</p>
+
+        <h2 id="childrens-privacy">Children&apos;s Privacy</h2>
+        <p>Our Services are not directed to children under 13, and we do not knowingly collect personal information from children under 13. If you believe a child has provided us personal information, please contact us at <a href="mailto:help@openinterpreter.com">help@openinterpreter.com</a>.</p>
+
+        <h2 id="international-users">International Users</h2>
+        <p>Our Services may be hosted in the United States. If you use the Services from outside the U.S., your information may be transferred to and processed in the U.S. We take steps designed to protect information during such transfers as required by applicable law.</p>
+
+        <h2 id="changes-to-this-policy">Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. If we make material changes, we will notify you through the application or by email. Your continued use of the Services after changes take effect constitutes acceptance of the updated policy.</p>
+
+        <h2 id="contact-us">Contact Us</h2>
+        <p>If you have questions about this Privacy Policy or want to exercise your privacy rights, contact us at <a href="mailto:help@openinterpreter.com">help@openinterpreter.com</a>.</p>
       </div>
     )
   }
