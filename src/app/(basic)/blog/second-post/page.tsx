@@ -9,7 +9,7 @@ export default function SecondBlogPost() {
       <p>September 24, 2024</p>
 
       <p>
-        Here's the content of the second blog post. Let's make it different from the first one.
+        Here&apos;s the content of the second blog post. Let&apos;s make it different from the first one.
       </p>
 
       <p>
