@@ -25,10 +25,10 @@ export default function GuidePage() {
             Interpreter is a desktop application that lets you work alongside AI agents. These agents can edit your documents, fill out PDF forms, manipulate spreadsheets, and automate repetitive tasks.
           </p>
           <p className="text-muted-foreground mb-6">
-            To get started, download the app for Mac and sign in with your account. Once you're in, you'll see your desktop with a chat interface on the side.
+            To get started, download the app for Mac and sign in with your account. Once you&apos;re in, you&apos;ll see your desktop with a chat interface on the side.
           </p>
           <p className="text-muted-foreground">
-            Simply describe what you want to do in natural language. For example: "Fill out this tax form with my information" or "Create a summary of this PDF document."
+            Simply describe what you want to do in natural language. For example: &ldquo;Fill out this tax form with my information&rdquo; or &ldquo;Create a summary of this PDF document.&rdquo;
           </p>
         </section>
 
@@ -59,7 +59,7 @@ export default function GuidePage() {
 
           <h3 className="text-lg font-medium text-foreground mb-4 mt-8">Background Agents</h3>
           <p className="text-muted-foreground">
-            With Pro plans, you can run agents in the background. Start a task, continue with your work, and get notified when it's complete. Perfect for long-running operations like processing large datasets.
+            With Pro plans, you can run agents in the background. Start a task, continue with your work, and get notified when it&apos;s complete. Perfect for long-running operations like processing large datasets.
           </p>
         </section>
 

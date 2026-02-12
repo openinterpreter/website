@@ -18,7 +18,7 @@ export default function TermsOfService() {
             1. Acceptance of Terms
           </h2>
           <p className="text-muted-foreground">
-            By accessing or using Interpreter ("the Service"), you agree to be bound by these
+            By accessing or using Interpreter (&ldquo;the Service&rdquo;), you agree to be bound by these
             Terms of Service. If you do not agree to these terms, please do not use the Service.
           </p>
         </section>
@@ -116,7 +116,7 @@ export default function TermsOfService() {
             8. Disclaimer of Warranties
           </h2>
           <p className="text-muted-foreground">
-            THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND,
+            THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; WITHOUT WARRANTIES OF ANY KIND,
             EITHER EXPRESS OR IMPLIED. WE DO NOT WARRANT THAT THE SERVICE WILL BE ERROR-FREE,
             SECURE, OR UNINTERRUPTED. YOU USE THE SERVICE AT YOUR OWN RISK.
           </p>

@@ -122,7 +122,7 @@ export default function PrivacyPolicy() {
 
         <section>
           <h2 className="text-2xl font-medium text-foreground mb-4">
-            9. Children's Privacy
+            9. Children&apos;s Privacy
           </h2>
           <p className="text-muted-foreground">
             Our services are not directed to children under 13. We do not knowingly collect
@@ -137,7 +137,7 @@ export default function PrivacyPolicy() {
           </h2>
           <p className="text-muted-foreground">
             We may update this privacy policy from time to time. We will notify you of any
-            changes by posting the new policy on this page and updating the "Last updated" date.
+            changes by posting the new policy on this page and updating the &ldquo;Last updated&rdquo; date.
           </p>
         </section>
 

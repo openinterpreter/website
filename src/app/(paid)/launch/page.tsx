@@ -69,11 +69,6 @@ const BASE_DEMOS = [
 //   ],
 // };
 
-const DOWNLOAD_URLS = {
-  appleSilicon: 'https://auth.openinterpreter.com/storage/v1/object/public/workstationupdater/releases/Interpreter-arm64.dmg',
-  intel: 'https://auth.openinterpreter.com/storage/v1/object/public/workstationupdater/releases/Interpreter-x64.dmg',
-  windows: 'https://auth.openinterpreter.com/storage/v1/object/public/workstationupdater/releases/Interpreter-x64.exe',
-};
 
 // Section descriptions that fade between each other
 // Each description is [line1, line2] — line2 goes on a new line if it fits in 2 lines
@@ -150,7 +145,7 @@ export default function Home() {
 
   // Active section tracking for dynamic headers
   const [activeSectionId, setActiveSectionId] = useState<keyof typeof SECTION_DESCRIPTIONS>('hero');
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
+  const [, setScrollDirection] = useState<'up' | 'down'>('down');
   const lastScrollY = useRef(0);
 
   const demoSectionRef = useRef<HTMLDivElement>(null);
@@ -162,8 +157,6 @@ export default function Home() {
   const emailSubmittedRef = useRef(false);
   const [getUpdates, setGetUpdates] = useState(true);
   const emailSourceRef = useRef<"mobile_link" | "desktop_signup">("desktop_signup");
-  const [osType, setOsType] = useState<'windows' | 'mac' | null>(null);
-  const [cpuType, setCpuType] = useState<string | null>(null);
   const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
 
 
@@ -200,42 +193,8 @@ export default function Home() {
     return () => document.removeEventListener('click', handleClick);
   }, [downloadMenuOpen]);
 
-  // OS and CPU detection
-  useEffect(() => {
-    const detect = async () => {
-      const ua = navigator.userAgent;
-      const isWindows = ua.includes('Windows');
-      setOsType(isWindows ? 'windows' : 'mac');
-      if (!isWindows) {
-        try {
-          const canvas = document.createElement('canvas');
-          const gl = canvas.getContext('webgl2');
-          const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info');
-          const renderer = gl && debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : '';
-          setCpuType(renderer.includes('Apple') ? 'Apple Silicon' : 'Intel');
-        } catch {
-          setCpuType('Apple Silicon');
-        }
-      }
-    };
-    detect();
-  }, []);
-
-  const getDownloadUrl = () => {
-    if (osType === 'windows') return DOWNLOAD_URLS.windows;
-    return cpuType === 'Apple Silicon' ? DOWNLOAD_URLS.appleSilicon : DOWNLOAD_URLS.intel;
-  };
-
-  const getDownloadLabel = () => {
-    return 'Download the Beta';
-  };
-
   const demosContainerRef = useRef<HTMLDivElement>(null);
   const demoVideosRef = useRef<HTMLDivElement>(null);
-  // inputRef and listRef commented out - part of profession feature
-  // const inputRef = useRef<HTMLInputElement>(null);
-  // const listRef = useRef<HTMLDivElement>(null);
-  const hasScrolledToBottom = useRef(false);
   const pricingRef = useRef<HTMLElement>(null);
   const faqRef = useRef<HTMLDivElement>(null);
 
