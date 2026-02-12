@@ -5,7 +5,7 @@ import { ProgressiveBlur } from "@/components/launch/motion-primitives/progressi
 import Header from "@/components/launch/Header";
 import Footer from "@/components/launch/Footer";
 import DownloadButton from "@/components/launch/DownloadButton";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 // PROFESSIONS feature commented out - to restore, uncomment this array,
 // PROFESSION_DEMOS, profession-related state, and the profession list UI
@@ -906,7 +906,7 @@ export default function Home() {
                     emailSubmittedRef.current = true;
                     setEmailButtonHidden(true);
                     setEmailOverlayPhase("emailExiting");
-                    supabase.from("desktop_waitlist").insert({ email: emailValue.trim(), source: emailSourceRef.current, get_updates: getUpdates }).then(() => {});
+                    getSupabase().from("desktop_waitlist").insert({ email: emailValue.trim(), source: emailSourceRef.current, get_updates: getUpdates }).then(() => {});
                   }
                 }}
               >
