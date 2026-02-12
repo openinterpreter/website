@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'American Grotesk';
+  src: url('/fonts/test-american-grotesk-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'American Grotesk';
+  src: url('/fonts/test-american-grotesk-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'American Grotesk';
+  src: url('/fonts/test-american-grotesk-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'American Grotesk';
+  src: url('/fonts/test-american-grotesk-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * SPACING SYSTEM
+ *
+ * Three spacing levels used consistently throughout:
+ * - Tight (gap-2, space-y-2): 0.5rem / 8px - icon+text, very close elements
+ * - Medium (gap-8, mb-8, p-8): 2rem / 32px - related elements, buttons, cards
+ * - Wide (gap-16, mb-16): 4rem / 64px - nav links, footer columns, major sections
+ *
+ * TYPOGRAPHY SYSTEM
+ *
+ * Three text sizes used consistently:
+ * - Small (text-sm): 14px - nav, buttons, footer, labels
+ * - Medium (text-lg): 18px - body text, subtitles
+ * - Large (text-4xl lg:text-5xl): 36-48px - headings, big text
+ */
+
+:root {
+  /* Edge spacing - distance from screen edge to content */
+  /* Nav gap scales with edge spacing */
+  --edge-spacing: 18px;
+  --nav-gap: 10px;
+
+  /* Neutral gray palette */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-950: #0a0a0a;
+
+  /* Semantic colors - Light mode */
+  --background: #ffffff;
+  --foreground: #000000;
+  --muted: var(--neutral-400);
+  --muted-foreground: var(--neutral-600);
+  --border: var(--neutral-200);
+  --card: var(--neutral-100);
+  --card-foreground: var(--neutral-900);
+  --primary: var(--neutral-950);
+  --primary-foreground: var(--neutral-50);
+  --secondary: var(--neutral-200);
+  --secondary-foreground: var(--neutral-800);
+  --accent: var(--neutral-100);
+  --accent-foreground: var(--neutral-900);
+
+  /* Footer - always dark */
+  --footer-background: var(--neutral-950);
+  --footer-foreground: var(--neutral-50);
+}
+
+.dark {
+  /* Semantic colors - Dark mode */
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: var(--neutral-600);
+  --muted-foreground: var(--neutral-400);
+  --border: var(--neutral-800);
+  --card: var(--neutral-900);
+  --card-foreground: var(--neutral-100);
+  --primary: var(--neutral-50);
+  --primary-foreground: var(--neutral-950);
+  --secondary: var(--neutral-800);
+  --secondary-foreground: var(--neutral-200);
+  --accent: var(--neutral-900);
+  --accent-foreground: var(--neutral-100);
+
+  /* Footer stays dark in dark mode too */
+  --footer-background: var(--neutral-950);
+  --footer-foreground: var(--neutral-50);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-footer: var(--footer-background);
+  --color-footer-foreground: var(--footer-foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Squircle corners */
+.squircle {
+  border-radius: 8px;
+  corner-shape: squircle;
+}
+
+.squircle-sm {
+  border-radius: 6px;
+  corner-shape: squircle;
+}
+
+/* Responsive edge spacing */
+@media (min-width: 640px) {
+  :root {
+    --edge-spacing: 27px;
+    --nav-gap: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --edge-spacing: 48px;
+    --nav-gap: 21px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --edge-spacing: 58px;
+    --nav-gap: 25px;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anchor scroll offset - aligns with TOC detection (center of viewport) */
+section[id] {
+  scroll-margin-top: 40vh;
+}
+
+/* Video background styling */
+.video-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-container video {
+  object-fit: cover;
+}
