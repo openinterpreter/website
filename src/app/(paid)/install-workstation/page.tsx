@@ -15,7 +15,7 @@ const DOWNLOAD_URLS = {
 function BackgroundGrid() {
   const gridRef = useRef<HTMLDivElement | null>(null)
   const [cellSize, setCellSize] = useState<{ w: number; h: number }>({ w: 160, h: 34 })
-  const [gridDims, setGridDims] = useState<{ cols: number; rows: number }>({ cols: 0, rows: 0 })
+  const [, setGridDims] = useState<{ cols: number; rows: number }>({ cols: 0, rows: 0 })
   type Range = { c0: number; r0: number; c1: number; r1: number; alpha: number; fading: boolean }
   const [ranges, setRanges] = useState<Range[]>([])
   const dragStateRef = useRef<{
@@ -127,7 +127,7 @@ function BackgroundGrid() {
 
     const mergeIfOverlap = (list: Array<{ c0: number; r0: number; c1: number; r1: number }>) => {
       // Simple O(n^2) merge for overlapping rectangles
-      let merged = [...list]
+      const merged = [...list]
       let changed = true
       while (changed) {
         changed = false
@@ -166,7 +166,7 @@ function BackgroundGrid() {
         return
       }
       const anchor = pt
-      let nextRanges = addMode ? [...rangesRef.current] : []
+      const nextRanges = addMode ? [...rangesRef.current] : []
       const activeIndex = nextRanges.length
       nextRanges.push({ c0: anchor.c, r0: anchor.r, c1: anchor.c, r1: anchor.r, alpha: 1, fading: false })
       setRanges(nextRanges)
@@ -184,7 +184,7 @@ function BackgroundGrid() {
       if (idx == null) return
       let rect = normalizeRange(dragStateRef.current.anchor, pt)
       setRanges(prev => {
-        let copy = [...prev]
+        const copy = [...prev]
         // Bring active box to full opacity
         if (copy[idx]) copy[idx] = { ...rect, alpha: 1, fading: false }
 

@@ -7,7 +7,7 @@ export default function About() {
       <h1>About</h1>
       
       <p>
-        This is the about page content. You can write whatever you'd like here.
+        This is the about page content. You can write whatever you&apos;d like here.
       </p>
 
       <p>
