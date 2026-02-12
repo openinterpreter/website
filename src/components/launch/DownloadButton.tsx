@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 
-const DOWNLOAD_URLS = {
+export const DOWNLOAD_URLS = {
   appleSilicon: 'https://auth.openinterpreter.com/storage/v1/object/public/workstationupdater/releases/Interpreter-arm64.dmg',
   intel: 'https://auth.openinterpreter.com/storage/v1/object/public/workstationupdater/releases/Interpreter-x64.dmg',
   windows: 'https://auth.openinterpreter.com/storage/v1/object/public/workstationupdater/releases/Interpreter-x64.exe',

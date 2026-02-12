@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { ProgressiveBlur } from "@/components/launch/motion-primitives/progressive-blur";
 import Header from "@/components/launch/Header";
 import Footer from "@/components/launch/Footer";
-import DownloadButton, { useDeviceType } from "@/components/launch/DownloadButton";
+import DownloadButton, { useDeviceType, DOWNLOAD_URLS } from "@/components/launch/DownloadButton";
 import { getSupabase } from "@/lib/supabase";
 
 // PROFESSIONS feature commented out - to restore, uncomment this array,
@@ -96,8 +96,8 @@ const PRICING_TIERS = [
     monthlyPrice: "Free",
     yearlyPrice: "Free",
     subtitle: "Includes:",
-    features: ["Bring your own API keys", "Login with OpenAI or Claude", "All tools and integrations", "Unlimited conversations"],
-    cta: "download",
+    features: ["Bring your own AI", "Login with OpenAI or Claude"],
+    cta: "Download",
     highlighted: false,
     recommended: false,
   },
@@ -106,8 +106,8 @@ const PRICING_TIERS = [
     monthlyPrice: "$20",
     yearlyPrice: "$16",
     subtitle: "Everything in Free, plus:",
-    features: ["Interpreter-optimized models", "No API keys needed", "Priority support"],
-    cta: "download",
+    features: ["Interpreter-managed models", "No API keys needed", "Priority support"],
+    cta: "Download",
     highlighted: true,
     recommended: true,
   },
@@ -116,7 +116,7 @@ const PRICING_TIERS = [
     monthlyPrice: "Contact us",
     yearlyPrice: "Contact us",
     subtitle: "Everything in Paid, plus:",
-    features: ["Custom model configuration", "Dedicated support", "Volume pricing", "Team management"],
+    features: ["Compliance", "Dedicated support"],
     cta: "Contact Us",
     highlighted: false,
     recommended: false,
@@ -126,7 +126,7 @@ const PRICING_TIERS = [
 const Guide_ITEMS = [
   { question: "What is Interpreter?", answer: "Interpreter is a desktop app that lets you work alongside AI agents that can edit documents, fill PDF forms, work with spreadsheets, browse the web, and more." },
   { question: "What file types does it support?", answer: "PDF, Word (DOCX), Excel (XLSX), Markdown, and many more. Interpreter can read, edit, convert, and create documents across all major office formats." },
-  { question: "Which AI models can I use?", answer: "On the free plan, you can bring your own API keys for OpenAI, Anthropic, Groq, OpenRouter, or use local models via Ollama. You can also sign in with your OpenAI or Claude account. The paid plan includes Interpreter-optimized models with no setup required." },
+  { question: "Which AI models can I use?", answer: "On the free plan, you can bring your own API keys for OpenAI, Anthropic, Groq, OpenRouter, or use local models via Ollama. You can also sign in with your OpenAI or Claude account. The paid plan includes Interpreter-managed models with no setup required." },
   { question: "Is my data private?", answer: "Interpreter runs locally on your computer. Your files stay on your machine and are processed locally. When using AI models, only the relevant context is sent to the model provider you choose." },
   { question: "What platforms does it support?", answer: "Interpreter is available for macOS (Apple Silicon and Intel) and Windows." },
 ];
@@ -149,7 +149,7 @@ export default function Home() {
   const lastScrollY = useRef(0);
 
   const demoSectionRef = useRef<HTMLDivElement>(null);
-  const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">("monthly");
+  const [billingPeriod] = useState<"monthly" | "yearly">("monthly");
   const [emailOverlayPhase, setEmailOverlayPhase] = useState<"closed" | "mounting" | "visible" | "emailExiting" | "thanks" | "exiting">("closed");
   const [emailValue, setEmailValue] = useState("");
   const [emailButtonHidden, setEmailButtonHidden] = useState(false);
@@ -157,7 +157,7 @@ export default function Home() {
   const emailSubmittedRef = useRef(false);
   const [getUpdates, setGetUpdates] = useState(true);
   const emailSourceRef = useRef<"mobile_link" | "desktop_signup" | "linux_waitlist">("desktop_signup");
-  const { deviceType } = useDeviceType();
+  const { deviceType, cpuType } = useDeviceType();
   const [downloadMenuOpen, setDownloadMenuOpen] = useState(false);
 
 
@@ -721,30 +721,7 @@ export default function Home() {
           {/* Mobile Pricing */}
           <div className="px-4 py-16" style={{ paddingLeft: 'var(--edge-spacing)', paddingRight: 'var(--edge-spacing)' }}>
             <h2 className="text-3xl font-medium text-foreground text-center mb-8">Pricing</h2>
-            <div className="flex justify-center mb-10">
-              <div className="inline-flex items-center bg-secondary squircle p-1">
-                <button
-                  onClick={() => setBillingPeriod("monthly")}
-                  className={`px-5 py-2 text-sm font-medium squircle transition-all ${
-                    billingPeriod === "monthly"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  Monthly
-                </button>
-                <button
-                  onClick={() => setBillingPeriod("yearly")}
-                  className={`px-5 py-2 text-sm font-medium squircle transition-all ${
-                    billingPeriod === "yearly"
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  Yearly
-                </button>
-              </div>
-            </div>
+            {/* Toggle hidden for now - monthly only */}
             <div className="flex flex-col gap-4">
               {PRICING_TIERS.map((tier) => {
                 const price = billingPeriod === "monthly" ? tier.monthlyPrice : tier.yearlyPrice;
@@ -766,10 +743,19 @@ export default function Home() {
                         </li>
                       ))}
                     </ul>
-                    {tier.cta === "download" ? (
-                      <DownloadButton showDropdown={false} label="Download the Beta" />
+                    {tier.cta === "Download" ? (
+                      <a
+                        href={deviceType === 'windows' ? DOWNLOAD_URLS.windows : cpuType === 'Intel' ? DOWNLOAD_URLS.intel : DOWNLOAD_URLS.appleSilicon}
+                        className={`w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
+                          tier.highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
+                        }`}
+                      >
+                        {tier.cta}
+                      </a>
                     ) : (
-                      <button className="w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 bg-accent text-accent-foreground">
+                      <button className={`w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
+                        tier.highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
+                      }`}>
                         {tier.cta}
                       </button>
                     )}
@@ -853,31 +839,7 @@ export default function Home() {
               {/* Centered Title */}
               <h2 className="text-4xl lg:text-5xl font-medium text-foreground text-center mb-8">Pricing</h2>
 
-              {/* Monthly/Yearly Toggle */}
-              <div className="flex justify-center mb-16">
-                <div className="inline-flex items-center bg-secondary squircle p-1">
-                  <button
-                    onClick={() => setBillingPeriod("monthly")}
-                    className={`px-5 py-2 text-sm font-medium squircle transition-all ${
-                      billingPeriod === "monthly"
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    Monthly
-                  </button>
-                  <button
-                    onClick={() => setBillingPeriod("yearly")}
-                    className={`px-5 py-2 text-sm font-medium squircle transition-all ${
-                      billingPeriod === "yearly"
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    Yearly
-                  </button>
-                </div>
-              </div>
+              {/* Toggle hidden for now - monthly only */}
 
               {/* Pricing Cards - 3 columns */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -909,10 +871,19 @@ export default function Home() {
                           </li>
                         ))}
                       </ul>
-                      {tier.cta === "download" ? (
-                        <DownloadButton showDropdown={false} label="Download the Beta" />
+                      {tier.cta === "Download" ? (
+                        <a
+                          href={deviceType === 'windows' ? DOWNLOAD_URLS.windows : cpuType === 'Intel' ? DOWNLOAD_URLS.intel : DOWNLOAD_URLS.appleSilicon}
+                          className={`w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
+                            tier.highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
+                          }`}
+                        >
+                          {tier.cta}
+                        </a>
                       ) : (
-                        <button className="w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 bg-accent text-accent-foreground">
+                        <button className={`w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
+                          tier.highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
+                        }`}>
                           {tier.cta}
                         </button>
                       )}
