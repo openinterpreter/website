@@ -13,7 +13,7 @@ export default function Header({ className = "", currentSection, activeHash, for
     if (activeHash === '#faq') return 'faq';
     if (activeHash === '#pricing') return 'pricing';
     if (currentSection === 'demos' || activeHash === '#demos') return 'demos';
-    return 'about'; // hero = about
+    return 'home';
   };
 
   const activeSection = getActiveSection();
@@ -21,7 +21,7 @@ export default function Header({ className = "", currentSection, activeHash, for
   // Active section is brighter (full opacity), others are dimmer
   const getLinkClass = (section: string) => {
     const isActive = activeSection === section;
-    return `transition-all duration-200 group-hover:opacity-50 group-hover:blur-[1px] hover:!opacity-100 hover:!blur-none ${isActive ? 'opacity-100' : 'opacity-50'}`;
+    return `transition-[opacity,filter] duration-150 group-hover:opacity-50 group-hover:blur-[1px] hover:!opacity-100 hover:!blur-none ${isActive ? 'opacity-100' : 'opacity-50'}`;
   };
 
   return (
@@ -39,8 +39,8 @@ export default function Header({ className = "", currentSection, activeHash, for
         className="group flex items-center text-sm leading-none transition-colors duration-500"
         style={{ gap: 'var(--nav-gap)', marginTop: 'calc((29px - 1em) / 2)', color: forceWhite ? '#ffffff' : 'var(--foreground)' }}
       >
-        <a href="#about" className={getLinkClass('about')}>Home</a>
-        <a href="#demos" className={getLinkClass('demos')}>Demos</a>
+        <a href="#home" className={getLinkClass('home')}>Home</a>
+        <a href="#features" className={getLinkClass('demos')}>Features</a>
         <a href="#pricing" className={getLinkClass('pricing')}>Pricing</a>
         {/* <a href="/guide" className="opacity-50 transition-all duration-200 group-hover:opacity-50 group-hover:blur-[1px] hover:!opacity-100 hover:!blur-none">Guide</a> */}
       </nav>

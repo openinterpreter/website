@@ -8,6 +8,8 @@ const DOWNLOAD_URLS = {
   windows: 'https://auth.openinterpreter.com/storage/v1/object/public/workstationupdater/releases/Interpreter-x64.exe',
 };
 
+export type DeviceType = 'windows' | 'mac' | 'linux' | 'mobile' | null;
+
 interface DownloadButtonProps {
   label?: string;
   showLabel?: boolean;
@@ -15,40 +17,64 @@ interface DownloadButtonProps {
   className?: string;
   dropdownDirection?: "up" | "down";
   size?: "sm" | "md";
+  forceWhite?: boolean;
+  onLinuxClick?: () => void;
+  onMobileClick?: () => void;
 }
 
-export default function DownloadButton({
-  label,
-  showLabel = false,
-  showDropdown = true,
-  className = "",
-  dropdownDirection = "down",
-  size = "sm",
-}: DownloadButtonProps) {
-  const [osType, setOsType] = useState<'windows' | 'mac' | null>(null);
+export function useDeviceType() {
+  const [deviceType, setDeviceType] = useState<DeviceType>(null);
   const [cpuType, setCpuType] = useState<string | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const detect = async () => {
       const ua = navigator.userAgent;
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+      if (isMobile) {
+        setDeviceType('mobile');
+        return;
+      }
       const isWindows = ua.includes('Windows');
-      setOsType(isWindows ? 'windows' : 'mac');
-      if (!isWindows) {
-        try {
-          const canvas = document.createElement('canvas');
-          const gl = canvas.getContext('webgl2');
-          const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info');
-          const renderer = gl && debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : '';
-          setCpuType(renderer.includes('Apple') ? 'Apple Silicon' : 'Intel');
-        } catch {
-          setCpuType('Apple Silicon');
-        }
+      if (isWindows) {
+        setDeviceType('windows');
+        return;
+      }
+      const isLinux = ua.includes('Linux');
+      if (isLinux) {
+        setDeviceType('linux');
+        return;
+      }
+      // Default to mac
+      setDeviceType('mac');
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl2');
+        const debugInfo = gl?.getExtension('WEBGL_debug_renderer_info');
+        const renderer = gl && debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : '';
+        setCpuType(renderer.includes('Apple') ? 'Apple Silicon' : 'Intel');
+      } catch {
+        setCpuType('Apple Silicon');
       }
     };
     detect();
   }, []);
+
+  return { deviceType, cpuType };
+}
+
+export default function DownloadButton({
+  label,
+  showDropdown = true,
+  className = "",
+  dropdownDirection = "down",
+  size = "sm",
+  forceWhite = false,
+  onLinuxClick,
+  onMobileClick,
+}: DownloadButtonProps) {
+  const { deviceType, cpuType } = useDeviceType();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -62,34 +88,56 @@ export default function DownloadButton({
   }, [menuOpen]);
 
   const getDownloadUrl = () => {
-    if (osType === 'windows') return DOWNLOAD_URLS.windows;
+    if (deviceType === 'windows') return DOWNLOAD_URLS.windows;
     return cpuType === 'Apple Silicon' ? DOWNLOAD_URLS.appleSilicon : DOWNLOAD_URLS.intel;
   };
 
-  const getDownloadLabel = () => {
+  const getButtonLabel = () => {
     if (label) return label;
-    if (!showLabel) return 'Download';
-    if (osType === 'windows') return 'Download for Windows';
-    if (cpuType === 'Apple Silicon') return 'Download for Mac';
-    if (cpuType === 'Intel') return 'Download for Mac (Intel)';
-    return 'Download';
+    if (deviceType === 'linux') return 'Get Linux Updates';
+    if (deviceType === 'mobile') return 'Email Me a Link';
+    return 'Download the Beta';
   };
+
+  const isActionButton = deviceType === 'linux' || deviceType === 'mobile';
 
   const py = size === "md" ? "py-3" : "py-2";
 
+  const bgClass = forceWhite ? '' : 'bg-primary';
+  const fgClass = forceWhite ? '' : 'text-primary-foreground';
+  const borderClass = forceWhite ? 'border-black/20' : 'border-primary-foreground/20';
+  const bgStyle = forceWhite ? { backgroundColor: '#ffffff', color: '#000000' } : {};
+
+  const handleMainClick = () => {
+    if (deviceType === 'linux' && onLinuxClick) {
+      onLinuxClick();
+    } else if (deviceType === 'mobile' && onMobileClick) {
+      onMobileClick();
+    }
+  };
+
   return (
     <div className={`relative ${className}`} ref={ref}>
-      <div className="inline-flex items-center bg-primary text-primary-foreground squircle text-sm font-medium">
-        <a
-          href={getDownloadUrl()}
-          className={`px-6 ${py} hover:opacity-80 transition-opacity`}
-        >
-          {getDownloadLabel()}
-        </a>
+      <div className={`inline-flex items-center ${bgClass} ${fgClass} squircle text-sm font-medium transition-colors duration-500`} style={bgStyle}>
+        {isActionButton ? (
+          <button
+            onClick={handleMainClick}
+            className={`px-6 ${py} hover:opacity-80 transition-opacity`}
+          >
+            {getButtonLabel()}
+          </button>
+        ) : (
+          <a
+            href={getDownloadUrl()}
+            className={`px-6 ${py} hover:opacity-80 transition-opacity`}
+          >
+            {getButtonLabel()}
+          </a>
+        )}
         {showDropdown && (
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className={`px-2 ${py} border-l border-primary-foreground/20 hover:opacity-80 transition-all`}
+            className={`px-2 ${py} border-l ${borderClass} hover:opacity-80 transition-all`}
             aria-label="More download options"
           >
             <svg
@@ -105,7 +153,10 @@ export default function DownloadButton({
         )}
       </div>
       {showDropdown && menuOpen && (
-        <div className={`absolute ${dropdownDirection === "up" ? "bottom-full mb-2" : "top-full mt-2"} left-0 bg-primary text-primary-foreground squircle overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.3)] min-w-full`}>
+        <div
+          className={`absolute ${dropdownDirection === "up" ? "bottom-full mb-2" : "top-full mt-2"} left-0 ${bgClass} ${fgClass} squircle overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.3)] min-w-full`}
+          style={bgStyle}
+        >
           <a href={DOWNLOAD_URLS.appleSilicon} className="block px-4 py-2.5 text-sm hover:opacity-70 transition-opacity whitespace-nowrap">Mac (Apple Silicon)</a>
           <a href={DOWNLOAD_URLS.intel} className="block px-4 py-2.5 text-sm hover:opacity-70 transition-opacity whitespace-nowrap">Mac (Intel)</a>
           <a href={DOWNLOAD_URLS.windows} className="block px-4 py-2.5 text-sm hover:opacity-70 transition-opacity whitespace-nowrap">Windows</a>

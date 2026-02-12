@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .logo { fill: #000000; }
+    @media (prefers-color-scheme: dark) {
+      .logo { fill: #ffffff; }
+    }
+  </style>
+  <circle class="logo" cx="16" cy="6.829" r="2.829" />
+  <rect class="logo" x="13.171" y="12.0" width="5.659" height="16.0" rx="2.829" />
+</svg>
