@@ -5,7 +5,6 @@ import { ProgressiveBlur } from "@/components/launch/motion-primitives/progressi
 import Header from "@/components/launch/Header";
 import Footer from "@/components/launch/Footer";
 import DownloadButton, { useDeviceType, DOWNLOAD_URLS } from "@/components/launch/DownloadButton";
-import { getSupabase } from "@/lib/supabase";
 
 // PROFESSIONS feature commented out - to restore, uncomment this array,
 // PROFESSION_DEMOS, profession-related state, and the profession list UI
@@ -1029,7 +1028,11 @@ export default function Home() {
                       emailSubmittedRef.current = true;
                       setEmailButtonHidden(true);
                       setEmailOverlayPhase("emailExiting");
-                      getSupabase().from("desktop_waitlist").insert({ email: emailValue.trim(), source: emailSourceRef.current, get_updates: getUpdates, platform: emailSourceRef.current === "linux_waitlist" ? "linux" : undefined }).then(() => {});
+                      fetch("/api/send-link", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email: emailValue.trim(), source: emailSourceRef.current, get_updates: getUpdates, platform: emailSourceRef.current === "linux_waitlist" ? "linux" : undefined }),
+                      }).catch(() => {});
                     }
                   }}
                 >
@@ -1095,7 +1098,11 @@ export default function Home() {
                     emailSubmittedRef.current = true;
                     setEmailButtonHidden(true);
                     setEmailOverlayPhase("emailExiting");
-                    getSupabase().from("desktop_waitlist").insert({ email: emailValue.trim(), source: emailSourceRef.current, get_updates: getUpdates, platform: emailSourceRef.current === "linux_waitlist" ? "linux" : undefined }).then(() => {});
+                    fetch("/api/send-link", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ email: emailValue.trim(), source: emailSourceRef.current, get_updates: getUpdates, platform: emailSourceRef.current === "linux_waitlist" ? "linux" : undefined }),
+                    }).catch(() => {});
                   }
                 }}
                 className="flex flex-col gap-5"

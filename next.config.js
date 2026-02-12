@@ -1,6 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export', // Generate static HTML/CSS
-}
+const nextConfig = {}
 
 module.exports = nextConfig 

@@ -23,6 +23,7 @@
     "next": "15.0.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "resend": "^6.9.2",
     "shadcn-ui": "^0.2.3",
     "tailwind-merge": "^2.5.4"
   },
