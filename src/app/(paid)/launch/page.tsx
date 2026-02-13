@@ -615,7 +615,7 @@ export default function Home() {
           {/* Mobile: image shifted up 20%. Desktop: normal position */}
           <div className="absolute inset-0 -top-[20%] -right-[150px] sm:top-0 sm:right-0">
             <img
-              src="/hero.png"
+              src="/hero.jpg"
               alt=""
               className="w-full h-full object-cover object-right"
             />
@@ -648,7 +648,7 @@ export default function Home() {
           <div className="relative min-h-dvh flex flex-col text-white overflow-hidden">
             {/* Hero image background */}
             <div className="absolute inset-0 -right-[150px] -top-[20%]">
-              <img src="/hero.png" alt="" className="w-full h-full object-cover object-right" />
+              <img src="/hero.jpg" alt="" className="w-full h-full object-cover object-right" />
             </div>
             {/* Gradient overlay */}
             <div className="absolute inset-0" style={{
@@ -707,7 +707,7 @@ export default function Home() {
                   {desc && <p className="text-base text-muted-foreground mb-8">{desc[0]} {desc[1]}</p>}
                   <div className="w-full aspect-[4/3] bg-secondary overflow-hidden" style={{ borderRadius: '16px', cornerShape: 'squircle' } as React.CSSProperties}>
                     <img
-                      src={`/preview-${demo.id}.png`}
+                      src={`/preview-${demo.id}.jpg`}
                       alt={demo.title}
                       className="w-full h-full object-cover contrast-[1.1]"
                     />
@@ -818,7 +818,7 @@ export default function Home() {
               >
                 <div className="w-full aspect-[4/3] bg-secondary overflow-hidden" style={{ borderRadius: '16px', cornerShape: 'squircle' } as React.CSSProperties}>
                   <img
-                    src={`/preview-${demo.id}.png`}
+                    src={`/preview-${demo.id}.jpg`}
                     alt={demo.title}
                     className="w-full h-full object-cover contrast-[1.1]"
                   />

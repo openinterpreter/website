@@ -50,7 +50,7 @@ export default function Footer() {
         className="hidden md:block"
       >
         <img 
-          src="/interpreter.png"
+          src="/interpreter.jpg"
           alt="Description"
           className="w-96"
         />
