@@ -37,9 +37,6 @@ export default function Footer({ className = "" }: FooterProps) {
             <a href="/launch/privacy" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
               Privacy Policy
             </a>
-            <a href="/launch/terms" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms of Service
-            </a>
           </div>
         </div>
 

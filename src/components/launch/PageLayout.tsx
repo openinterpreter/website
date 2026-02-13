@@ -95,7 +95,7 @@ export default function PageLayout({ children, toc }: PageLayoutProps) {
 
           {/* Nav */}
           <nav
-            className="group flex items-center text-sm leading-none text-foreground"
+            className="group hidden sm:flex items-center text-sm leading-none text-foreground"
             style={{ gap: 'var(--nav-gap)', marginTop: 'calc((29px - 1em) / 2)' }}
           >
             <a href="/launch#about" className={getNavLinkClass("/launch#about")}>Home</a>
@@ -136,7 +136,7 @@ export default function PageLayout({ children, toc }: PageLayoutProps) {
       )}
 
       {/* Content */}
-      <main className="max-w-4xl mx-auto px-5 sm:px-6 pt-32 sm:pt-48 pb-16 sm:pb-24">
+      <main className="max-w-4xl mx-auto px-5 sm:px-6 pt-44 sm:pt-48 pb-16 sm:pb-24">
         {children}
       </main>
 
