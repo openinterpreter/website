@@ -5,6 +5,8 @@ import { ProgressiveBlur } from "@/components/launch/motion-primitives/progressi
 import Header from "@/components/launch/Header";
 import Footer from "@/components/launch/Footer";
 import DownloadButton, { useDeviceType, DOWNLOAD_URLS } from "@/components/launch/DownloadButton";
+import ScrollToFeaturesButton from "@/components/launch/ScrollToFeaturesButton";
+import Logo from "@/components/launch/Logo";
 
 // PROFESSIONS feature commented out - to restore, uncomment this array,
 // PROFESSION_DEMOS, profession-related state, and the profession list UI
@@ -28,6 +30,12 @@ const BASE_DEMOS = [
   { id: "pdf", title: "PDF Forms" },
   { id: "word", title: "Word Documents" },
 ];
+
+const DEMO_VIDEO_SRC: Record<string, string> = {
+  excel: "/videos/demos/excel.mp4",
+  pdf: "/videos/demos/pdf.mp4",
+  word: "/videos/demos/word.mp4",
+};
 
 // PROFESSION_DEMOS commented out - see PROFESSIONS comment for restoration instructions
 // const PROFESSION_DEMOS: Record<string, Array<{ id: string; title: string }>> = {
@@ -73,7 +81,7 @@ const BASE_DEMOS = [
 // Each description is [line1, line2] — line2 goes on a new line if it fits in 2 lines
 const SECTION_DESCRIPTIONS: Record<string, [string, string]> = {
   hero: ['Interpreter lets you work alongside agents that can', 'edit your documents, fill PDF forms, and more.'],
-  pdf: ['Reads files on your computer to fill PDF forms instantly.', 'Tax forms, applications, contracts, and more.'],
+  pdf: ['Fill PDF forms instantly with Interpreter.', 'Works with interactive forms and non-interactive forms using annotations.'],
   excel: ['Pivot tables, charts, formulas, and more.', 'A fully featured, AI-native Excel replacement.'],
   word: ['Tracked changes, formatting, embedded images, and more.', 'A fully featured Word editor with AI built in.'],
 };
@@ -95,7 +103,7 @@ const PRICING_TIERS = [
     monthlyPrice: "Free",
     yearlyPrice: "Free",
     subtitle: "Includes:",
-    features: ["Bring your own AI", "Login with OpenAI or Claude"],
+    features: ["Login with OpenAI", "Bring your own API keys", "Run offline with Ollama"],
     cta: "Download",
     highlighted: false,
     recommended: false,
@@ -123,11 +131,48 @@ const PRICING_TIERS = [
 ];
 
 const Guide_ITEMS = [
-  { question: "What is Interpreter?", answer: "Interpreter is a desktop app that lets you work alongside AI agents that can edit documents, fill PDF forms, work with spreadsheets, browse the web, and more." },
-  { question: "What file types does it support?", answer: "PDF, Word (DOCX), Excel (XLSX), Markdown, and many more. Interpreter can read, edit, convert, and create documents across all major office formats." },
-  { question: "Which AI models can I use?", answer: "On the free plan, you can bring your own API keys for OpenAI, Anthropic, Groq, OpenRouter, or use local models via Ollama. You can also sign in with your OpenAI or Claude account. The paid plan includes Interpreter-managed models with no setup required." },
-  { question: "Is my data private?", answer: "Interpreter runs locally on your computer. Your files stay on your machine and are processed locally. When using AI models, only the relevant context is sent to the model provider you choose." },
-  { question: "What platforms does it support?", answer: "Interpreter is available for macOS (Apple Silicon and Intel) and Windows." },
+  {
+    question: "What is Interpreter?",
+    answer: "A desktop agent that can read, edit, and create documents on your computer. It includes full editors for Word, Excel, and PDF. Describe what you need and the agent handles it, or open any document and edit it yourself.",
+  },
+  {
+    question: "What can the agent do?",
+    answer: (
+      <ul className="space-y-2">
+        {[
+          "Ask questions across folders of PDFs to surface patterns and evidence",
+          "Pull data from documents into Excel with working formulas",
+          "Fill PDF forms from other files or images",
+          "Turn receipts into formatted expense reports",
+          "Turn transcripts into notes, action items, or slide decks",
+          "Build dashboards and financial models from business data",
+          "Organize files, batch rename, connect to integrations",
+        ].map((item, i) => (
+          <li key={i} className="flex items-baseline gap-3">
+            <span className="w-1 h-1 rounded-full bg-muted-foreground/50 shrink-0 translate-y-[-1px]" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    ),
+  },
+  {
+    question: "Which AI models can I use?",
+    answer: "If you have a ChatGPT account, you can sign in with it and use Interpreter for free. You can also bring your own API keys for OpenAI, Anthropic, Groq, OpenRouter, or run local models through Ollama. The paid plan includes managed models with no setup required.",
+  },
+  {
+    question: "Is my data private?",
+    answer: (
+      <>
+        Local model usage stays on your device.
+        {" "}
+        If you use your own API key, your data goes directly from your device to that provider, not through our servers.
+        {" "}
+        If you use hosted models, your requests are routed through our servers and logged for up to 30 days; see our{" "}
+        <a href="/launch/privacy" className="underline hover:opacity-80">Privacy Policy</a>.
+      </>
+    ),
+  },
 ];
 
 export default function Home() {
@@ -148,6 +193,7 @@ export default function Home() {
   const lastScrollY = useRef(0);
 
   const demoSectionRef = useRef<HTMLDivElement>(null);
+  const mobileFeaturesRef = useRef<HTMLDivElement>(null);
   const [billingPeriod] = useState<"monthly" | "yearly">("monthly");
   const [emailOverlayPhase, setEmailOverlayPhase] = useState<"closed" | "mounting" | "visible" | "emailExiting" | "thanks" | "exiting">("closed");
   const [emailValue, setEmailValue] = useState("");
@@ -194,7 +240,6 @@ export default function Home() {
   }, [downloadMenuOpen]);
 
   const demosContainerRef = useRef<HTMLDivElement>(null);
-  const demoVideosRef = useRef<HTMLDivElement>(null);
   const pricingRef = useRef<HTMLElement>(null);
   const faqRef = useRef<HTMLDivElement>(null);
 
@@ -441,6 +486,25 @@ export default function Home() {
   // Video opacity: 1 at top, 0 when scrolled
   const videoOpacity = currentSection === 'hero' ? 1 : 0;
   const isInDemosMode = currentSection !== 'hero';
+  const toggleVideoPlayback = (video: HTMLVideoElement) => {
+    if (video.paused) {
+      void video.play();
+      return;
+    }
+    video.pause();
+  };
+  const scrollToFeatures = useCallback((event?: React.MouseEvent<HTMLAnchorElement>) => {
+    event?.preventDefault();
+
+    if (window.innerWidth < 1024) {
+      mobileFeaturesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      document.getElementById("features")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    history.replaceState(null, "", "#features");
+    setActiveHash("#features");
+  }, []);
 
   return (
     <div className="bg-background text-foreground lg:h-auto lg:overflow-visible">
@@ -500,6 +564,7 @@ export default function Home() {
               activeHash={activeHash}
               className="pointer-events-auto"
               forceWhite={currentSection === 'hero'}
+              onFeaturesClick={scrollToFeatures}
             />
 
             {/* Spacer */}
@@ -590,22 +655,14 @@ export default function Home() {
         </div>
 
         {/* Scroll Down Indicator - must be outside transformed containers */}
-        <button
-          onClick={() => window.scrollTo({ top: 1, behavior: 'smooth' })}
-          className={`hidden lg:flex fixed z-20 bottom-12 xl:bottom-14 w-10 h-10 items-center justify-center rounded-full hover:opacity-80 transition-opacity duration-500 ${
+        <ScrollToFeaturesButton
+          onClick={() => scrollToFeatures()}
+          className={`hidden lg:flex fixed z-20 bottom-12 xl:bottom-14 duration-500 ${
             isInDemosMode ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"
           }`}
-          style={{
-            right: 'var(--edge-spacing)',
-            backgroundColor: '#ffffff',
-            color: '#000000',
-          }}
-          aria-label="Scroll down"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </button>
+          style={{ right: "var(--edge-spacing)" }}
+          ariaLabel="Scroll down"
+        />
 
         {/* Full Screen Hero Image - desktop only, fades out on scroll to reveal demos underneath */}
         <div
@@ -660,9 +717,8 @@ export default function Home() {
             {/* Content */}
             <div className="relative z-10 flex flex-col flex-1 p-4" style={{ paddingLeft: 'var(--edge-spacing)', paddingRight: 'var(--edge-spacing)' }}>
               {/* Logo */}
-              <a href="/launch" className="flex flex-col gap-3">
-                <div className="w-[29px] h-[29px] bg-white rounded-full" />
-                <div className="w-[29px] h-[82px] bg-white rounded-full" />
+              <a href="/launch" style={{ color: "#ffffff" }}>
+                <Logo className="w-[29px] h-[123px]" />
               </a>
               <div className="flex-1" />
               <div className="pb-8">
@@ -682,23 +738,14 @@ export default function Home() {
                   >
                     Email yourself a link
                   </button>
-                  <button
-                    onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-                    className="w-10 h-10 flex items-center justify-center rounded-full hover:opacity-80 transition-opacity"
-                    style={{ backgroundColor: '#ffffff', color: '#000000' }}
-                    aria-label="Scroll down"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                  </button>
+                  <ScrollToFeaturesButton onClick={() => scrollToFeatures()} />
                 </div>
               </div>
             </div>
           </div>
 
           {/* Mobile Features */}
-          <div className="px-4" style={{ paddingLeft: 'var(--edge-spacing)', paddingRight: 'var(--edge-spacing)' }}>
+          <div ref={mobileFeaturesRef} className="px-4" style={{ paddingLeft: 'var(--edge-spacing)', paddingRight: 'var(--edge-spacing)' }}>
             {BASE_DEMOS.map((demo) => {
               const desc = SECTION_DESCRIPTIONS[demo.id];
               return (
@@ -706,10 +753,15 @@ export default function Home() {
                   <h2 className="text-3xl font-medium tracking-tight text-foreground mb-3">{demo.title}</h2>
                   {desc && <p className="text-base text-muted-foreground mb-8">{desc[0]} {desc[1]}</p>}
                   <div className="w-full aspect-[4/3] bg-secondary overflow-hidden" style={{ borderRadius: '16px', cornerShape: 'squircle' } as React.CSSProperties}>
-                    <img
-                      src={`/preview-${demo.id}.jpg`}
-                      alt={demo.title}
-                      className="w-full h-full object-cover contrast-[1.1]"
+                    <video
+                      src={DEMO_VIDEO_SRC[demo.id]}
+                      className="w-full h-full object-cover contrast-[1.1] shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      onClick={(e) => toggleVideoPlayback(e.currentTarget)}
                     />
                   </div>
                 </div>
@@ -781,7 +833,7 @@ export default function Home() {
                       </svg>
                     </span>
                   </button>
-                  <div className="overflow-hidden transition-all duration-200" style={{ maxHeight: expandedFaq === index ? '200px' : '0', opacity: expandedFaq === index ? 1 : 0 }}>
+                  <div className="overflow-hidden transition-all duration-200" style={{ maxHeight: expandedFaq === index ? '500px' : '0', opacity: expandedFaq === index ? 1 : 0 }}>
                     <div className="px-6 pb-5 text-sm text-muted-foreground whitespace-pre-line">{item.answer}</div>
                   </div>
                 </div>
@@ -797,7 +849,7 @@ export default function Home() {
 
         {/* Demo Videos - desktop only */}
         <div id="demos" className="hidden lg:block absolute" style={{ top: 1 }} />
-        <div id="features" className="hidden lg:block absolute" style={{ top: '360px' }} />
+        <div id="features" className="absolute top-[100vh] lg:top-[360px]" />
         <section
           ref={demoSectionRef}
           className="hidden lg:block transition-all duration-500 ease-out"
@@ -805,7 +857,6 @@ export default function Home() {
         >
           {/* Videos on the right side - fade out at pricing */}
           <div
-            ref={demoVideosRef}
             className="lg:ml-[40%] pt-[100vh] lg:pt-[480px] transition-opacity duration-500"
             style={{ opacity: currentSection === 'third' ? 0 : 1 }}
           >
@@ -817,10 +868,15 @@ export default function Home() {
                 style={{ paddingLeft: 'var(--edge-spacing)', paddingRight: 'var(--edge-spacing)' }}
               >
                 <div className="w-full aspect-[4/3] bg-secondary overflow-hidden" style={{ borderRadius: '16px', cornerShape: 'squircle' } as React.CSSProperties}>
-                  <img
-                    src={`/preview-${demo.id}.jpg`}
-                    alt={demo.title}
-                    className="w-full h-full object-cover contrast-[1.1]"
+                  <video
+                    src={DEMO_VIDEO_SRC[demo.id]}
+                    className="w-full h-full object-cover contrast-[1.1] shadow-[0_10px_30px_rgba(0,0,0,0.18)]"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    onClick={(e) => toggleVideoPlayback(e.currentTarget)}
                   />
                 </div>
               </div>
@@ -918,7 +974,7 @@ export default function Home() {
                     <div
                       className="overflow-hidden transition-all duration-200"
                       style={{
-                        maxHeight: expandedFaq === index ? '200px' : '0',
+                        maxHeight: expandedFaq === index ? '500px' : '0',
                         opacity: expandedFaq === index ? 1 : 0,
                       }}
                     >
