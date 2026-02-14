@@ -4,7 +4,7 @@ export default function Logo({ className = "" }: { className?: string }) {
       viewBox="0 0 29 123"
       fill="currentColor"
       className={className}
-      aria-label="Workstation logo"
+      aria-label="Interpreter logo"
     >
       {/* circle: 29×29 | gap: 12 | pill: 29×82 | total: 29×123 */}
       <circle cx="14.5" cy="14.5" r="14.5" />

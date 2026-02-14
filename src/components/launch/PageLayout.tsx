@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { ProgressiveBlur } from "@/components/launch/motion-primitives/progressive-blur";
 import Footer from "@/components/launch/Footer";
 import DownloadButton from "@/components/launch/DownloadButton";
+import Header from "@/components/launch/Header";
 
 interface TocItem {
   id: string;
@@ -17,8 +17,6 @@ interface PageLayoutProps {
 }
 
 export default function PageLayout({ children, toc }: PageLayoutProps) {
-  const pathname = usePathname();
-  const isGuidePage = pathname === "/launch/guide";
   const [activeSection, setActiveSection] = useState<string | null>(toc?.[0]?.id ?? null);
 
   // Track scroll position to highlight active TOC item
@@ -55,12 +53,6 @@ export default function PageLayout({ children, toc }: PageLayoutProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [toc]);
 
-  // Nav link class - highlight Guide when on guide page
-  const getNavLinkClass = (path: string) => {
-    const isActive = path === "/launch/guide" && isGuidePage;
-    return `transition-all duration-200 group-hover:opacity-50 group-hover:blur-[1px] hover:!opacity-100 hover:!blur-none ${isActive ? 'opacity-100' : 'opacity-50'}`;
-  };
-
   // TOC link class - same behavior as nav
   const getTocLinkClass = (id: string) => {
     const isActive = activeSection === id;
@@ -84,26 +76,7 @@ export default function PageLayout({ children, toc }: PageLayoutProps) {
         className="fixed z-40 p-4 lg:p-6 xl:p-8"
         style={{ paddingLeft: 'var(--edge-spacing)' }}
       >
-        <header className="flex items-start" style={{ gap: 'var(--edge-spacing)' }}>
-          {/* Logo - the "i" */}
-          <a href="/launch" className="flex flex-col gap-3">
-            {/* Eye */}
-            <div className="w-[29px] h-[29px] bg-primary rounded-full" />
-            {/* Stem */}
-            <div className="w-[29px] h-[82px] bg-primary rounded-full" />
-          </a>
-
-          {/* Nav */}
-          <nav
-            className="group hidden sm:flex items-center text-sm leading-none text-foreground"
-            style={{ gap: 'var(--nav-gap)', marginTop: 'calc((29px - 1em) / 2)' }}
-          >
-            <a href="/launch#about" className={getNavLinkClass("/launch#about")}>Home</a>
-            <a href="/launch#demos" className={getNavLinkClass("/launch#demos")}>Demos</a>
-            <a href="/launch#pricing" className={getNavLinkClass("/launch#pricing")}>Pricing</a>
-            <a href="/launch/guide" className={getNavLinkClass("/launch/guide")}>Guide</a>
-          </nav>
-        </header>
+        <Header anchorPrefix="/launch" hideNavOnMobile />
       </div>
 
       {/* Download button - top right */}
