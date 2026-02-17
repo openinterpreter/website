@@ -1,6 +1,7 @@
 "use client";
 
-import Logo from "@/components/launch/Logo";
+import Logo from "@/components/site/Logo";
+import Link from "next/link";
 
 interface HeaderProps {
   className?: string;
@@ -40,13 +41,13 @@ export default function Header({
   return (
     <header className={`relative flex items-start ${className}`} style={{ pointerEvents: 'auto', gap: 'var(--edge-spacing)' }}>
       {/* Logo - the "i" */}
-      <a
-        href="/launch"
+      <Link
+        href="/"
         className="transition-colors duration-500"
         style={{ color: forceWhite ? "#ffffff" : "var(--primary)" }}
       >
         <Logo className="w-[29px] h-[123px]" />
-      </a>
+      </Link>
 
       {/* Nav container - horizontally aligned with center of eye */}
       <nav
@@ -56,6 +57,7 @@ export default function Header({
         <a href={`${anchorPrefix}#home`} className={getLinkClass('home')}>Home</a>
         <a href={`${anchorPrefix}#features`} onClick={onFeaturesClick} className={getLinkClass('demos')}>Features</a>
         <a href={`${anchorPrefix}#pricing`} className={getLinkClass('pricing')}>Pricing</a>
+        {/* <Link href="/blog" className={getLinkClass('blog')}>Blog</Link> */}
         {/* <a href="/guide" className="opacity-50 transition-all duration-200 group-hover:opacity-50 group-hover:blur-[1px] hover:!opacity-100 hover:!blur-none">Guide</a> */}
       </nav>
     </header>

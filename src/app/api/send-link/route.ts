@@ -32,22 +32,26 @@ export async function POST(request: Request) {
     }
 
     const siteUrl = "https://openinterpreter.com";
+    const isLinuxWaitlist = source === "linux_waitlist";
+    const isBlogUpdates = source === "blog_updates";
 
     // Send email via Resend
     const { error } = await getResend().emails.send({
       from: "Open Interpreter <auth@updates.openinterpreter.com>",
       to: [email.trim()],
       subject:
-        source === "linux_waitlist"
-          ? "Interpreter for Linux — We'll keep you posted"
-          : "Your link to Interpreter",
+        isLinuxWaitlist
+          ? "Interpreter for Linux - We'll keep you posted"
+          : isBlogUpdates
+            ? "You're subscribed to Interpreter updates"
+            : "Your link to Interpreter",
       html: `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 20px;">
           <div style="margin-bottom: 32px;">
             <div style="width: 29px; height: 29px; background: #000; border-radius: 50%; display: inline-block;"></div>
           </div>
           ${
-            source === "linux_waitlist"
+            isLinuxWaitlist
               ? `
                 <h1 style="font-size: 24px; font-weight: 500; margin-bottom: 16px; color: #000;">
                   We'll let you know when it's ready for Linux.
@@ -56,6 +60,18 @@ export async function POST(request: Request) {
                   Thanks for your interest in Interpreter. We're working on Linux support and will email you as soon as it's available.
                 </p>
               `
+              : isBlogUpdates
+                ? `
+                  <h1 style="font-size: 24px; font-weight: 500; margin-bottom: 16px; color: #000;">
+                    You're on the updates list
+                  </h1>
+                  <p style="font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 24px;">
+                    Thanks for subscribing. We'll send occasional updates when new posts and product releases go live.
+                  </p>
+                  <a href="${siteUrl}/blog" style="display: inline-block; padding: 12px 24px; background: #000; color: #fff; text-decoration: none; border-radius: 8px; font-size: 14px; font-weight: 500;">
+                    Read the blog
+                  </a>
+                `
               : `
                 <h1 style="font-size: 24px; font-weight: 500; margin-bottom: 16px; color: #000;">
                   Here's your link

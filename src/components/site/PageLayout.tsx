@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ProgressiveBlur } from "@/components/launch/motion-primitives/progressive-blur";
-import Footer from "@/components/launch/Footer";
-import DownloadButton from "@/components/launch/DownloadButton";
-import Header from "@/components/launch/Header";
+import { ProgressiveBlur } from "@/components/site/motion-primitives/progressive-blur";
+import Footer from "@/components/site/Footer";
+import DownloadButton from "@/components/site/DownloadButton";
+import Header from "@/components/site/Header";
 
 interface TocItem {
   id: string;
@@ -76,7 +76,7 @@ export default function PageLayout({ children, toc }: PageLayoutProps) {
         className="fixed z-40 p-4 lg:p-6 xl:p-8"
         style={{ paddingLeft: 'var(--edge-spacing)' }}
       >
-        <Header anchorPrefix="/launch" hideNavOnMobile />
+        <Header anchorPrefix="/" hideNavOnMobile />
       </div>
 
       {/* Download button - top right */}

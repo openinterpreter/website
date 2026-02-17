@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ProgressiveBlur } from "@/components/launch/motion-primitives/progressive-blur";
-import Header from "@/components/launch/Header";
-import Footer from "@/components/launch/Footer";
-import DownloadButton, { useDeviceType, DOWNLOAD_URLS } from "@/components/launch/DownloadButton";
-import ScrollToFeaturesButton from "@/components/launch/ScrollToFeaturesButton";
-import Logo from "@/components/launch/Logo";
+import Link from "next/link";
+import { ProgressiveBlur } from "@/components/site/motion-primitives/progressive-blur";
+import Header from "@/components/site/Header";
+import Footer from "@/components/site/Footer";
+import DownloadButton, { useDeviceType, DOWNLOAD_URLS } from "@/components/site/DownloadButton";
+import ScrollToFeaturesButton from "@/components/site/ScrollToFeaturesButton";
+import Logo from "@/components/site/Logo";
 
 // PROFESSIONS feature commented out - to restore, uncomment this array,
 // PROFESSION_DEMOS, profession-related state, and the profession list UI
@@ -36,6 +37,12 @@ const DEMO_VIDEO_SRC: Record<string, string> = {
   pdf: "/videos/demos/pdf.mp4",
   word: "/videos/demos/word.mp4",
 };
+
+const HERO_TITLE = "The AI Document Editor";
+const HERO_TAGLINE: [string, string] = [
+  "Interpreter lets you work alongside agents that can",
+  "edit your documents, fill PDF forms, and more.",
+];
 
 // PROFESSION_DEMOS commented out - see PROFESSIONS comment for restoration instructions
 // const PROFESSION_DEMOS: Record<string, Array<{ id: string; title: string }>> = {
@@ -80,15 +87,15 @@ const DEMO_VIDEO_SRC: Record<string, string> = {
 // Section descriptions that fade between each other
 // Each description is [line1, line2] — line2 goes on a new line if it fits in 2 lines
 const SECTION_DESCRIPTIONS: Record<string, [string, string]> = {
-  hero: ['Interpreter lets you work alongside agents that can', 'edit your documents, fill PDF forms, and more.'],
-  pdf: ['Fill PDF forms instantly with Interpreter.', 'Works with interactive forms and non-interactive forms using annotations.'],
+  hero: HERO_TAGLINE,
+  pdf: ['Fill PDF forms instantly with Interpreter.', 'Works with interactive forms and non-interactive forms.'],
   excel: ['Pivot tables, charts, formulas, and more.', 'A fully featured, AI-native Excel replacement.'],
   word: ['Tracked changes, formatting, embedded images, and more.', 'A fully featured Word editor with AI built in.'],
 };
 
 // Unique titles mapped to which sections show them (prevents flashing when title stays the same)
 const TITLE_SECTIONS: Record<string, string[]> = {
-  'Get more done, faster': ['hero'],
+  [HERO_TITLE]: ['hero'],
   'PDF Forms': ['pdf'],
   'Excel Sheets': ['excel'],
   'Word Documents': ['word'],
@@ -96,6 +103,27 @@ const TITLE_SECTIONS: Record<string, string[]> = {
 
 // Consistent spacing between major sections
 const SECTION_GAP = "py-24";
+const FAQ_DIVIDER_CONTAINER = "w-full";
+const getFaqDividerItemClass = (index: number) =>
+  index === 0 ? "" : "border-t border-border";
+
+const getPricingCardClass = (highlighted: boolean, extra = "") =>
+  [
+    "squircle p-6 flex flex-col",
+    highlighted ? "bg-transparent border border-border" : "bg-transparent border border-border",
+    extra,
+  ].join(" ").trim();
+
+const getPricingPrimaryTextClass = (highlighted: boolean) =>
+  highlighted ? "text-foreground" : "text-foreground";
+
+const getPricingSecondaryTextClass = (highlighted: boolean) =>
+  highlighted ? "text-muted-foreground" : "text-muted-foreground";
+
+const getPricingActionClass = (highlighted: boolean) =>
+  `w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
+    highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
+  }`;
 
 const PRICING_TIERS = [
   {
@@ -136,7 +164,7 @@ const Guide_ITEMS = [
     answer: "A desktop agent that can read, edit, and create documents on your computer. It includes full editors for Word, Excel, and PDF. Describe what you need and the agent handles it, or open any document and edit it yourself.",
   },
   {
-    question: "What can the agent do?",
+    question: "What can I ask the agent to do?",
     answer: (
       <ul className="space-y-2">
         {[
@@ -169,7 +197,7 @@ const Guide_ITEMS = [
         If you use your own API key, your data goes directly from your device to that provider, not through our servers.
         {" "}
         If you use hosted models, your requests are routed through our servers and logged for up to 30 days; see our{" "}
-        <a href="/launch/privacy" className="underline hover:opacity-80">Privacy Policy</a>.
+        <Link href="/legal/privacy" className="underline hover:opacity-80">Privacy Policy</Link>.
       </>
     ),
   },
@@ -486,6 +514,7 @@ export default function Home() {
   // Video opacity: 1 at top, 0 when scrolled
   const videoOpacity = currentSection === 'hero' ? 1 : 0;
   const isInDemosMode = currentSection !== 'hero';
+  const showDesktopPricingCta = currentSection === "third";
   const toggleVideoPlayback = (video: HTMLVideoElement) => {
     if (video.paused) {
       void video.play();
@@ -516,7 +545,7 @@ export default function Home() {
         {/* Blur behind header - fades in at pricing section (desktop only) */}
         <div
           className="hidden lg:block fixed inset-x-0 top-0 h-24 lg:h-28 z-30 pointer-events-none transition-opacity duration-500"
-          style={{ opacity: currentSection === 'third' ? 1 : 0 }}
+          style={{ opacity: showDesktopPricingCta ? 1 : 0 }}
         >
           <ProgressiveBlur
             className="absolute inset-0"
@@ -531,8 +560,8 @@ export default function Home() {
           className="hidden lg:block fixed z-40 top-4 lg:top-6 xl:top-8 transition-opacity duration-500"
           style={{
             right: 'var(--edge-spacing)',
-            opacity: currentSection === 'third' ? 1 : 0,
-            pointerEvents: currentSection === 'third' ? 'auto' : 'none',
+            opacity: showDesktopPricingCta ? 1 : 0,
+            pointerEvents: showDesktopPricingCta ? 'auto' : 'none',
           }}
         >
           <DownloadButton
@@ -556,7 +585,7 @@ export default function Home() {
           style={{ color: currentSection === 'hero' ? '#ffffff' : 'var(--foreground)' }}
         >
           <div
-            className="h-full flex flex-col p-4 lg:p-6 xl:p-8"
+            className="h-full flex flex-col p-4 lg:p-6 xl:p-8 pointer-events-none"
             style={{ paddingLeft: 'var(--edge-spacing)' }}
           >
             <Header
@@ -586,7 +615,7 @@ export default function Home() {
                   className={`text-4xl lg:text-5xl font-medium tracking-tight transition-opacity duration-300 ease-out whitespace-nowrap ${sections.includes(activeSectionId) ? '' : 'absolute top-0 left-0'}`}
                   style={{
                     opacity: sections.includes(activeSectionId) ? 1 : 0,
-                    pointerEvents: sections.includes(activeSectionId) ? 'auto' : 'none',
+                    pointerEvents: !approachingPricing && sections.includes(activeSectionId) ? 'auto' : 'none',
                   }}
                 >
                   {title}
@@ -603,16 +632,21 @@ export default function Home() {
                   className={`text-lg transition-opacity duration-300 ease-out ${activeSectionId === id ? '' : 'absolute top-0 left-0'}`}
                   style={{
                     opacity: activeSectionId === id ? 1 : 0,
-                    pointerEvents: activeSectionId === id ? 'auto' : 'none',
+                    pointerEvents: !approachingPricing && activeSectionId === id ? 'auto' : 'none',
                   }}
                 >
-                  {parts[0]}{breakFits[id] === false ? ' ' : <br />}{parts[1]}
+                  {parts[0]}
+                  {parts[1] ? (breakFits[id] === false ? ' ' : <br />) : null}
+                  {parts[1]}
                 </p>
               ))}
             </div>
 
             {/* Buttons */}
-            <div className="flex items-center gap-8 pointer-events-auto w-fit">
+            <div
+              className="flex items-center gap-8 w-fit"
+              style={{ pointerEvents: approachingPricing ? 'none' : 'auto' }}
+            >
                 <div ref={downloadButtonRef}>
                   <DownloadButton showLabel dropdownDirection="up" size="md" forceWhite={currentSection === 'hero'}
                     onLinuxClick={() => {
@@ -717,14 +751,16 @@ export default function Home() {
             {/* Content */}
             <div className="relative z-10 flex flex-col flex-1 p-4" style={{ paddingLeft: 'var(--edge-spacing)', paddingRight: 'var(--edge-spacing)' }}>
               {/* Logo */}
-              <a href="/launch" style={{ color: "#ffffff" }}>
+              <Link href="/" style={{ color: "#ffffff" }}>
                 <Logo className="w-[29px] h-[123px]" />
-              </a>
+              </Link>
               <div className="flex-1" />
               <div className="pb-8">
-                <h1 className="text-4xl font-medium tracking-tight mb-4">Get more done, faster</h1>
+                <h1 className="text-4xl font-medium tracking-tight mb-4">{HERO_TITLE}</h1>
                 <p ref={mobileDescRef} className="text-lg mb-8">
-                  Interpreter lets you work alongside agents that can{mobileBreakFits ? <br /> : ' '}edit your documents, fill PDF forms, and more.
+                  {HERO_TAGLINE[0]}
+                  {HERO_TAGLINE[1] ? (mobileBreakFits ? <br /> : ' ') : null}
+                  {HERO_TAGLINE[1]}
                 </p>
                 <div className="flex items-center justify-between">
                   <button
@@ -777,17 +813,17 @@ export default function Home() {
               {PRICING_TIERS.map((tier) => {
                 const price = billingPeriod === "monthly" ? tier.monthlyPrice : tier.yearlyPrice;
                 return (
-                  <div key={tier.name} className="bg-secondary squircle p-6 flex flex-col">
-                    <h3 className="text-lg font-medium text-foreground mb-1">{tier.name}</h3>
+                  <div key={tier.name} className={getPricingCardClass(tier.highlighted)}>
+                    <h3 className={`text-lg font-medium mb-1 ${getPricingPrimaryTextClass(tier.highlighted)}`}>{tier.name}</h3>
                     <div className="mb-6">
-                      <span className="text-2xl font-medium text-foreground">{price}</span>
-                      {price.startsWith("$") && <span className="text-sm text-muted-foreground">/mo.</span>}
+                      <span className={`text-2xl font-medium ${getPricingPrimaryTextClass(tier.highlighted)}`}>{price}</span>
+                      {price.startsWith("$") && <span className={`text-sm ${getPricingSecondaryTextClass(tier.highlighted)}`}>/mo.</span>}
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4">{tier.subtitle}</p>
+                    <p className={`text-sm mb-4 ${getPricingSecondaryTextClass(tier.highlighted)}`}>{tier.subtitle}</p>
                     <ul className="space-y-2 mb-8">
                       {tier.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <svg className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                        <li key={i} className={`flex items-start gap-2 text-sm ${getPricingSecondaryTextClass(tier.highlighted)}`}>
+                          <svg className={`w-4 h-4 mt-0.5 shrink-0 ${getPricingSecondaryTextClass(tier.highlighted)}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                           {feature}
@@ -797,16 +833,12 @@ export default function Home() {
                     {tier.cta === "Download" ? (
                       <a
                         href={deviceType === 'windows' ? DOWNLOAD_URLS.windows : cpuType === 'Intel' ? DOWNLOAD_URLS.intel : DOWNLOAD_URLS.appleSilicon}
-                        className={`w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
-                          tier.highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
-                        }`}
+                        className={getPricingActionClass(tier.highlighted)}
                       >
                         {tier.cta}
                       </a>
                     ) : (
-                      <button className={`w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
-                        tier.highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
-                      }`}>
+                      <button className={getPricingActionClass(tier.highlighted)}>
                         {tier.cta}
                       </button>
                     )}
@@ -819,12 +851,12 @@ export default function Home() {
           {/* Mobile FAQ */}
           <div className="px-4 py-16" style={{ paddingLeft: 'var(--edge-spacing)', paddingRight: 'var(--edge-spacing)' }}>
             <h2 className="text-3xl font-medium text-foreground text-center mb-10">FAQ</h2>
-            <div className="bg-secondary squircle divide-y divide-border overflow-hidden">
+            <div className={FAQ_DIVIDER_CONTAINER}>
               {Guide_ITEMS.map((item, index) => (
-                <div key={index}>
+                <div key={index} className={getFaqDividerItemClass(index)}>
                   <button
                     onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left gap-4"
+                    className="w-full py-5 flex items-center justify-between text-left gap-4"
                   >
                     <span className="text-sm font-medium text-foreground">{item.question}</span>
                     <span className="shrink-0 w-6 h-6 flex items-center justify-center text-muted-foreground">
@@ -834,7 +866,7 @@ export default function Home() {
                     </span>
                   </button>
                   <div className="overflow-hidden transition-all duration-200" style={{ maxHeight: expandedFaq === index ? '500px' : '0', opacity: expandedFaq === index ? 1 : 0 }}>
-                    <div className="px-6 pb-5 text-sm text-muted-foreground whitespace-pre-line">{item.answer}</div>
+                    <div className="pb-5 text-sm text-muted-foreground whitespace-pre-line">{item.answer}</div>
                   </div>
                 </div>
               ))}
@@ -903,23 +935,23 @@ export default function Home() {
                   return (
                     <div
                       key={tier.name}
-                      className="bg-secondary squircle p-6 flex flex-col min-h-[360px]"
+                      className={getPricingCardClass(tier.highlighted, "min-h-[360px]")}
                     >
-                      <h3 className="text-lg font-medium text-foreground mb-1">{tier.name}</h3>
+                      <h3 className={`text-lg font-medium mb-1 ${getPricingPrimaryTextClass(tier.highlighted)}`}>{tier.name}</h3>
                       {/* Price */}
                       <div className="mb-6">
-                        <span className="text-2xl font-medium text-foreground">{price}</span>
+                        <span className={`text-2xl font-medium ${getPricingPrimaryTextClass(tier.highlighted)}`}>{price}</span>
                         {price.startsWith("$") && (
-                          <span className="text-sm text-muted-foreground">/mo.</span>
+                          <span className={`text-sm ${getPricingSecondaryTextClass(tier.highlighted)}`}>/mo.</span>
                         )}
                       </div>
                       {/* Subtitle */}
-                      <p className="text-sm text-muted-foreground mb-4">{tier.subtitle}</p>
+                      <p className={`text-sm mb-4 ${getPricingSecondaryTextClass(tier.highlighted)}`}>{tier.subtitle}</p>
                       {/* Features with checkmarks */}
                       <ul className="space-y-2 mb-8 flex-1">
                         {tier.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                            <svg className="w-4 h-4 mt-0.5 shrink-0 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                          <li key={i} className={`flex items-start gap-2 text-sm ${getPricingSecondaryTextClass(tier.highlighted)}`}>
+                            <svg className={`w-4 h-4 mt-0.5 shrink-0 ${getPricingSecondaryTextClass(tier.highlighted)}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                             </svg>
                             {feature}
@@ -929,16 +961,12 @@ export default function Home() {
                       {tier.cta === "Download" ? (
                         <a
                           href={deviceType === 'windows' ? DOWNLOAD_URLS.windows : cpuType === 'Intel' ? DOWNLOAD_URLS.intel : DOWNLOAD_URLS.appleSilicon}
-                          className={`w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
-                            tier.highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
-                          }`}
+                          className={getPricingActionClass(tier.highlighted)}
                         >
                           {tier.cta}
                         </a>
                       ) : (
-                        <button className={`w-fit px-6 py-3 squircle text-sm font-medium transition-opacity hover:opacity-80 ${
-                          tier.highlighted ? "bg-primary text-primary-foreground" : "bg-accent text-accent-foreground"
-                        }`}>
+                        <button className={getPricingActionClass(tier.highlighted)}>
                           {tier.cta}
                         </button>
                       )}
@@ -951,12 +979,12 @@ export default function Home() {
             {/* Guide */}
             <div ref={faqRef} id="faq" className={SECTION_GAP}>
               <h2 className="text-4xl lg:text-5xl font-medium text-foreground text-center mb-12">FAQ</h2>
-              <div className="bg-secondary squircle divide-y divide-border overflow-hidden">
+              <div className={FAQ_DIVIDER_CONTAINER}>
                 {Guide_ITEMS.map((item, index) => (
-                  <div key={index}>
+                  <div key={index} className={getFaqDividerItemClass(index)}>
                     <button
                       onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
-                      className="w-full px-6 py-5 flex items-center justify-between text-left gap-4"
+                      className="w-full py-5 flex items-center justify-between text-left gap-4"
                     >
                       <span className="text-sm font-medium text-foreground">{item.question}</span>
                       <span className="shrink-0 w-6 h-6 flex items-center justify-center text-muted-foreground">
@@ -978,7 +1006,7 @@ export default function Home() {
                         opacity: expandedFaq === index ? 1 : 0,
                       }}
                     >
-                      <div className="px-6 pb-5 text-sm text-muted-foreground whitespace-pre-line">{item.answer}</div>
+                      <div className="pb-5 text-sm text-muted-foreground whitespace-pre-line">{item.answer}</div>
                     </div>
                   </div>
                 ))}
@@ -995,6 +1023,9 @@ export default function Home() {
       {emailOverlayPhase !== "closed" && (
         <div
           className="fixed inset-0 z-50"
+          style={{
+            pointerEvents: emailOverlayPhase === "visible" || emailOverlayPhase === "thanks" ? "auto" : "none",
+          }}
           onTransitionEnd={(e) => {
             if (e.target !== e.currentTarget) return;
           }}

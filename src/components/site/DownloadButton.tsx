@@ -102,10 +102,11 @@ export default function DownloadButton({
   const isActionButton = deviceType === 'linux' || deviceType === 'mobile';
 
   const py = size === "md" ? "py-3" : "py-2";
+  const mainPadding = showDropdown ? "pl-6 pr-2" : "px-6";
+  const caretPadding = "pl-1 pr-4";
 
   const bgClass = forceWhite ? '' : 'bg-primary';
   const fgClass = forceWhite ? '' : 'text-primary-foreground';
-  const borderClass = forceWhite ? 'border-black/20' : 'border-primary-foreground/20';
   const bgStyle = forceWhite ? { backgroundColor: '#ffffff', color: '#000000' } : {};
 
   const handleMainClick = () => {
@@ -122,14 +123,14 @@ export default function DownloadButton({
         {isActionButton ? (
           <button
             onClick={handleMainClick}
-            className={`px-6 ${py} hover:opacity-80 transition-opacity`}
+            className={`${mainPadding} ${py} hover:opacity-80 transition-opacity`}
           >
             {getButtonLabel()}
           </button>
         ) : (
           <a
             href={getDownloadUrl()}
-            className={`px-6 ${py} hover:opacity-80 transition-opacity`}
+            className={`${mainPadding} ${py} hover:opacity-80 transition-opacity`}
           >
             {getButtonLabel()}
           </a>
@@ -137,7 +138,7 @@ export default function DownloadButton({
         {showDropdown && (
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className={`px-2 ${py} border-l ${borderClass} hover:opacity-80 transition-all`}
+            className={`${caretPadding} ${py} hover:opacity-80 transition-all`}
             aria-label="More download options"
           >
             <svg

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "./ThemeProvider";
+import Link from "next/link";
 
 interface FooterProps {
   className?: string;
@@ -16,8 +17,20 @@ export default function Footer({ className = "" }: FooterProps) {
         <div>
           <h4 className="text-sm font-medium text-foreground mb-4">Product</h4>
           <div className="space-y-2">
-            <a href="#" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Open Source</a>
-            <a href="#" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+            <a
+              href="https://github.com/openinterpreter/open-interpreter"
+              target="_blank"
+              rel="noreferrer"
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Open Source
+            </a>
+            <a
+              href="mailto:killian@openinterpreter.com"
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Contact
+            </a>
           </div>
         </div>
 
@@ -25,8 +38,22 @@ export default function Footer({ className = "" }: FooterProps) {
         <div>
           <h4 className="text-sm font-medium text-foreground mb-4">Community</h4>
           <div className="space-y-2">
-            <a href="#" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Discord</a>
-            <a href="#" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">Twitter</a>
+            <a
+              href="https://discord.gg/Hvz9Axh84z"
+              target="_blank"
+              rel="noreferrer"
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Discord
+            </a>
+            <a
+              href="https://x.com/hellokillian"
+              target="_blank"
+              rel="noreferrer"
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Twitter
+            </a>
           </div>
         </div>
 
@@ -34,9 +61,9 @@ export default function Footer({ className = "" }: FooterProps) {
         <div>
           <h4 className="text-sm font-medium text-foreground mb-4">Legal</h4>
           <div className="space-y-2">
-            <a href="/launch/privacy" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/legal/privacy" className="block text-sm text-muted-foreground hover:text-foreground transition-colors">
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
 

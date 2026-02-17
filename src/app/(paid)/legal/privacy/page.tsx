@@ -1,9 +1,5 @@
-import PrivacyPolicyContent from "@/components/legal/PrivacyPolicyContent";
+import { redirect } from "next/navigation";
 
-export default function PrivacyPage() {
-  return (
-    <div>
-      <PrivacyPolicyContent />
-    </div>
-  );
+export default function LegacyPrivacyPage() {
+  redirect("/privacy");
 }
