@@ -1,4 +1,5 @@
 import "./style.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function Layout({
   children,
@@ -7,7 +8,10 @@ export default function Layout({
 }) {
   return (
     <html>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
