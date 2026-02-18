@@ -66,11 +66,8 @@ export async function POST(request: Request) {
                     You're on the updates list
                   </h1>
                   <p style="font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 24px;">
-                    Thanks for subscribing. We'll send occasional updates when new posts and product releases go live.
+                    Thanks for subscribing. We'll send occasional updates when product releases and major improvements go live.
                   </p>
-                  <a href="${siteUrl}/blog" style="display: inline-block; padding: 12px 24px; background: #000; color: #fff; text-decoration: none; border-radius: 8px; font-size: 14px; font-weight: 500;">
-                    Read the blog
-                  </a>
                 `
               : `
                 <h1 style="font-size: 24px; font-weight: 500; margin-bottom: 16px; color: #000;">
