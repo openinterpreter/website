@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SHARE_TITLE = "Interpreter: The AI Document Editor";
+const SHARE_TITLE = "Interpreter: The Desktop Agent";
 const SHARE_DESCRIPTION =
   "Interpreter lets you work alongside agents that can edit your documents, fill PDF forms, and more.";
 const SHARE_IMAGE = "/hero.jpg";

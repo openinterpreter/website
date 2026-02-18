@@ -38,7 +38,7 @@ const DEMO_VIDEO_SRC: Record<string, string> = {
   word: "/videos/demos/word.mp4",
 };
 
-const HERO_TITLE = "The AI Document Editor";
+const HERO_TITLE = "The Desktop Agent";
 const HERO_TAGLINE: [string, string] = [
   "Interpreter lets you work alongside agents that can",
   "edit your documents, fill PDF forms, and more.",
