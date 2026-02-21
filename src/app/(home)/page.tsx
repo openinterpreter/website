@@ -30,12 +30,14 @@ const BASE_DEMOS = [
   { id: "excel", title: "Excel Sheets" },
   { id: "pdf", title: "PDF Forms" },
   { id: "word", title: "Word Documents" },
+  { id: "markdown", title: "Markdown" },
 ];
 
 const DEMO_VIDEO_SRC: Record<string, string> = {
   excel: "/videos/demos/excel.mp4",
   pdf: "/videos/demos/pdf.mp4",
   word: "/videos/demos/word.mp4",
+  markdown: "/videos/demos/markdown.mp4",
 };
 
 const HERO_TITLE = "The Desktop Agent";
@@ -91,6 +93,7 @@ const SECTION_DESCRIPTIONS: Record<string, [string, string]> = {
   pdf: ['Fill PDF forms instantly with Interpreter.', 'Works with interactive forms and non-interactive forms.'],
   excel: ['Pivot tables, charts, formulas, and more.', 'A fully featured, AI-native Excel replacement.'],
   word: ['Tracked changes, formatting, embedded images, and more.', 'A fully featured Word editor with AI built in.'],
+  markdown: ['Accept granular edits and find new connections.', 'A local, rich text markdown editor.'],
 };
 
 // Unique titles mapped to which sections show them (prevents flashing when title stays the same)
@@ -99,6 +102,7 @@ const TITLE_SECTIONS: Record<string, string[]> = {
   'PDF Forms': ['pdf'],
   'Excel Sheets': ['excel'],
   'Word Documents': ['word'],
+  'Markdown': ['markdown'],
 };
 
 // Consistent spacing between major sections
