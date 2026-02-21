@@ -426,10 +426,10 @@ export default function Home() {
         return;
       }
 
-      // Past demos (pricing/faq) — keep showing last demo ("word")
+      // Past demos (pricing/faq) — keep showing last demo
       const pricingTop = pricingRef.current?.offsetTop ?? Infinity;
       if (centerY >= pricingTop) {
-        setActiveSectionId('word');
+        setActiveSectionId('markdown');
         return;
       }
 
